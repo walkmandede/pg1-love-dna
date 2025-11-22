@@ -70,7 +70,6 @@ class EngineService {
       distances[typeName] = (eiDist + ciDist) / 2;
     });
 
-    // Sort by distance ascending
     final sorted = distances.entries.toList()..sort((a, b) => a.value.compareTo(b.value));
 
     return sorted.map((e) => e.key).toList();
@@ -81,7 +80,7 @@ class EngineService {
     return TypeAssignment(
       primary: ranked[0],
       stabiliser: ranked[1],
-      growth: ranked.last, // Furthest type = growth opportunity
+      growth: ranked.last, // Last type equals to growth opportunity
     );
   }
 

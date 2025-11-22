@@ -46,7 +46,8 @@ class SessionState extends Equatable {
     return cards[currentCardIndex];
   }
 
-  /// Progress from 0.0 to 1.0
+  /// Loading Progress from 0.0 to 1.0
+  /// in case, want to show progress loading
   double get progress {
     if (cards.isEmpty) return 0;
     return (currentCardIndex + 1) / cards.length;

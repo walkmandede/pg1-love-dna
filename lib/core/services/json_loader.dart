@@ -42,8 +42,6 @@ class JsonLoader {
     return result;
   }
 
-  /// Load type centroids from centroids-json.json
-  /// Returns: Map<typeName, TraitVector>
   static Future<Map<String, TraitVector>> loadCentroids() async {
     final String jsonString = await rootBundle.loadString('assets/json/centroids-json.json');
     final Map<String, dynamic> data = json.decode(jsonString);
@@ -57,8 +55,6 @@ class JsonLoader {
     return result;
   }
 
-  /// Load type narratives from narratives-json.json
-  /// Returns: Map<typeName, Map<'title'|'short'|'long', String>>
   static Future<Map<String, Map<String, String>>> loadNarratives() async {
     final String jsonString = await rootBundle.loadString('assets/json/narratives-json.json');
     final Map<String, dynamic> data = json.decode(jsonString);

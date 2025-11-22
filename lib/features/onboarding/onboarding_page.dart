@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:pg1/core/routes/app_routes.dart';
 import 'package:pg1/core/states/session/bloc/session_bloc.dart';
 import 'package:pg1/core/states/session/bloc/session_state.dart';
+import 'package:pg1/features/onboarding/widgets/info_chip.dart';
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({super.key});
@@ -55,9 +56,9 @@ class OnboardingPage extends StatelessWidget {
                   runSpacing: 8,
                   alignment: WrapAlignment.center,
                   children: [
-                    _InfoChip(icon: Icons.timer_outlined, label: '5 minutes'),
-                    _InfoChip(icon: Icons.psychology_outlined, label: '12 cards'),
-                    _InfoChip(icon: Icons.lock_outline, label: 'Private'),
+                    InfoChip(icon: Icons.timer_outlined, label: '5 minutes'),
+                    InfoChip(icon: Icons.psychology_outlined, label: '12 cards'),
+                    InfoChip(icon: Icons.lock_outline, label: 'Private'),
                   ],
                 ),
 
@@ -93,29 +94,6 @@ class OnboardingPage extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _InfoChip extends StatelessWidget {
-  final IconData icon;
-  final String label;
-
-  const _InfoChip({required this.icon, required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(color: Theme.of(context).colorScheme.surfaceContainerHighest, borderRadius: BorderRadius.circular(20)),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 16, color: Theme.of(context).colorScheme.primary),
-          const SizedBox(width: 6),
-          Text(label, style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant)),
-        ],
       ),
     );
   }

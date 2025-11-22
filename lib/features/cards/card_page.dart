@@ -5,6 +5,8 @@ import 'package:pg1/core/routes/app_routes.dart';
 import 'package:pg1/core/states/session/bloc/session_bloc.dart';
 import 'package:pg1/core/states/session/bloc/session_event.dart';
 import 'package:pg1/core/states/session/bloc/session_state.dart';
+import 'package:pg1/features/cards/widgets/option_tile.dart';
+import 'package:pg1/features/cards/widgets/progress_handler.dart';
 
 class CardPage extends StatelessWidget {
   const CardPage({super.key});
@@ -30,7 +32,7 @@ class CardPage extends StatelessWidget {
           return SafeArea(
             child: Column(
               children: [
-                _ProgressHeader(state: state),
+                ProgressHeader(state: state),
 
                 Expanded(
                   child: SingleChildScrollView(
@@ -58,7 +60,7 @@ class CardPage extends StatelessWidget {
 
                         if (state.currentPhase == CardPhase.behaviour)
                           ...card.behaviours.map(
-                            (b) => _OptionTile(
+                            (b) => OptionTile(
                               id: b.id,
                               label: b.label,
                               isSelected: state.selectedBehaviourId == b.id,
@@ -69,7 +71,7 @@ class CardPage extends StatelessWidget {
                           )
                         else
                           ...card.interpretations.map(
-                            (i) => _OptionTile(
+                            (i) => OptionTile(
                               id: i.id,
                               label: i.label,
                               isSelected: false,
@@ -86,102 +88,6 @@ class CardPage extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class _ProgressHeader extends StatelessWidget {
-  final SessionState state;
-
-  const _ProgressHeader({required this.state});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Card ${state.cardNumber} of ${state.totalCards}',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
-              ),
-              Text(
-                state.currentPhase == CardPhase.behaviour ? 'Step 1/2' : 'Step 2/2',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).colorScheme.outline),
-              ),
-            ],
-          ),
-
-          const SizedBox(height: 8),
-
-          ClipRRect(
-            borderRadius: BorderRadius.circular(4),
-            child: LinearProgressIndicator(value: state.progress, minHeight: 6, backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _OptionTile extends StatelessWidget {
-  final String id;
-  final String label;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const _OptionTile({required this.id, required this.label, required this.isSelected, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: Material(
-        color: isSelected ? Theme.of(context).colorScheme.primaryContainer : Theme.of(context).colorScheme.surfaceContainerLow,
-        borderRadius: BorderRadius.circular(12),
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(12),
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: isSelected ? Theme.of(context).colorScheme.primary : Colors.transparent, width: 2),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  width: 32,
-                  height: 32,
-                  decoration: BoxDecoration(
-                    color: isSelected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.surfaceContainerHighest,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Center(
-                    child: Text(
-                      id,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: isSelected ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
-                    ),
-                  ),
-                ),
-
-                const SizedBox(width: 12),
-
-                Expanded(
-                  child: Text(label, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurface)),
-                ),
-              ],
-            ),
-          ),
-        ),
       ),
     );
   }
