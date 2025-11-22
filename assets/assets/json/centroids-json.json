@@ -1,0 +1,51 @@
+{
+  "types": {
+    "Steady Anchor": {
+      "centroid": [3, 3, 1, 1, 1, -1, -1, 1, -1]
+    },
+    "Quiet Protector": {
+      "centroid": [2, 2, 2, 2, -1, 1, -2, 0, -1]
+    },
+    "Warm Connector": {
+      "centroid": [1, 1, 3, -1, 3, -2, 2, 0, 1]
+    },
+    "Thoughtful Analyst": {
+      "centroid": [2, 1, 2, 1, 0, 1, -1, 1, -2]
+    },
+    "Independent Spirit": {
+      "centroid": [1, 0, 1, 3, -1, 2, -2, 0, 2]
+    },
+    "Growth-Seeker": {
+      "centroid": [1, 0, 2, 0, 2, -1, 1, 1, 2]
+    },
+    "Spark-Driven Adventurer": {
+      "centroid": [-1, -1, 1, -1, 1, -1, 2, 0, 3]
+    },
+    "Reassurance Harmoniser": {
+      "centroid": [0, 1, 3, -1, 2, -2, 3, -2, 0]
+    },
+    "Compassionate Healer": {
+      "centroid": [1, 0, 3, -2, 3, -2, 1, -1, 0]
+    },
+    "Purpose-Led Planner": {
+      "centroid": [2, 3, 1, 2, 0, 0, -1, 2, -2]
+    },
+    "Boundary-Minded Realist": {
+      "centroid": [2, 1, 0, 3, -1, 1, -2, 1, -1]
+    },
+    "Intuitive Romantic": {
+      "centroid": [-1, 0, 3, -1, 3, -1, 2, 0, 1]
+    }
+  },
+  "trait_order": [
+    "emotional_regulation",
+    "stability_consistency",
+    "sensitivity_attunement",
+    "boundaries_autonomy",
+    "vulnerability_openness",
+    "avoidance_withdrawal",
+    "pursuit_anxiety",
+    "conflict_approach",
+    "spontaneity_flexibility"
+  ]
+}
