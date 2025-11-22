@@ -1,0 +1,208 @@
+{
+  "cards": [
+    {
+      "id": "card_01",
+      "title": "The Slow Reply",
+      "scenario": "They take a long time to text back — longer than they usually do. No explanation, no emoji, just… quiet.",
+      "behaviours": [
+        { "id": "A", "label": "I stay calm and carry on with my day." },
+        { "id": "B", "label": "I check back in casually." },
+        { "id": "C", "label": "I pull back until they re-engage." },
+        { "id": "D", "label": "I stay warm but don't overthink it." }
+      ],
+      "interpretations": [
+        { "id": "1", "label": "They're probably busy." },
+        { "id": "2", "label": "Something's shifted." },
+        { "id": "3", "label": "I want to feel wanted." },
+        { "id": "4", "label": "Good things don't need forcing." }
+      ]
+    },
+    {
+      "id": "card_02",
+      "title": "The Blunt Text",
+      "scenario": "Their reply comes through short and flat. Not rude, just clipped — like their energy suddenly dropped.",
+      "behaviours": [
+        { "id": "A", "label": "I ask lightly if they're okay." },
+        { "id": "B", "label": "I mirror their tone." },
+        { "id": "C", "label": "I slow my energy." },
+        { "id": "D", "label": "I stay open and steady." }
+      ],
+      "interpretations": [
+        { "id": "1", "label": "Short messages happen." },
+        { "id": "2", "label": "They're withdrawing." },
+        { "id": "3", "label": "I shared more than them; that matters to me." },
+        { "id": "4", "label": "If they want to talk, they will." }
+      ]
+    },
+    {
+      "id": "card_03",
+      "title": "The Changed Plan",
+      "scenario": "Plans you made together suddenly change. They need to move something, cancel something, or shift the timing.",
+      "behaviours": [
+        { "id": "A", "label": "I adapt and roll with it." },
+        { "id": "B", "label": "I check how they're doing." },
+        { "id": "C", "label": "I create space." },
+        { "id": "D", "label": "I offer an alternative calmly." }
+      ],
+      "interpretations": [
+        { "id": "1", "label": "Life happens." },
+        { "id": "2", "label": "Reliability matters to me." },
+        { "id": "3", "label": "This throws me more than I expected." },
+        { "id": "4", "label": "Good connection survives timing issues." }
+      ]
+    },
+    {
+      "id": "card_04",
+      "title": "The Spontaneous Invite",
+      "scenario": "They message you with a last-minute idea: \"Want to do something tonight?\"",
+      "behaviours": [
+        { "id": "A", "label": "I join if I have space." },
+        { "id": "B", "label": "I check my energy then decide." },
+        { "id": "C", "label": "I keep plans steady." },
+        { "id": "D", "label": "I lean into the spontaneity." }
+      ],
+      "interpretations": [
+        { "id": "1", "label": "Fun moments matter." },
+        { "id": "2", "label": "I like being considered." },
+        { "id": "3", "label": "I need time to prepare mentally." },
+        { "id": "4", "label": "Connection grows through shared moments." }
+      ]
+    },
+    {
+      "id": "card_05",
+      "title": "The Compliment",
+      "scenario": "They compliment you — directly and without irony. It's warm, it's real, and it lands right on you.",
+      "behaviours": [
+        { "id": "A", "label": "I receive it warmly." },
+        { "id": "B", "label": "I joke it off lightly." },
+        { "id": "C", "label": "I accept but feel shy." },
+        { "id": "D", "label": "I return warmth steadily." }
+      ],
+      "interpretations": [
+        { "id": "1", "label": "Kindness matters to me." },
+        { "id": "2", "label": "This means something deeper." },
+        { "id": "3", "label": "Affection opens me but also scares me." },
+        { "id": "4", "label": "I like reciprocal energy." }
+      ]
+    },
+    {
+      "id": "card_06",
+      "title": "The Mixed Signals",
+      "scenario": "Their tone shifts during the conversation. Warm earlier, cooler now.",
+      "behaviours": [
+        { "id": "A", "label": "I keep things flowing, but hold a little back." },
+        { "id": "B", "label": "I check in openly — \"You okay?\" — then match their tone." },
+        { "id": "C", "label": "I mirror their distance." },
+        { "id": "D", "label": "I stay warm and consistent." }
+      ],
+      "interpretations": [
+        { "id": "1", "label": "People have off days." },
+        { "id": "2", "label": "Tone shifts usually mean something." },
+        { "id": "3", "label": "I want connection but also need to feel chosen." },
+        { "id": "4", "label": "If it matters, it'll steady itself." }
+      ]
+    },
+    {
+      "id": "card_07",
+      "title": "The Low-Energy Day",
+      "scenario": "They're slower and less responsive today.",
+      "behaviours": [
+        { "id": "A", "label": "I wait to see tomorrow's energy." },
+        { "id": "B", "label": "I check in lightly." },
+        { "id": "C", "label": "I step back." },
+        { "id": "D", "label": "I stay warm but move on with my evening." }
+      ],
+      "interpretations": [
+        { "id": "1", "label": "People get tired." },
+        { "id": "2", "label": "Promises matter." },
+        { "id": "3", "label": "I feel a wobble when people go quiet." },
+        { "id": "4", "label": "If they want me, they'll show it." }
+      ]
+    },
+    {
+      "id": "card_08",
+      "title": "The Hot–Cold Wave",
+      "scenario": "They're warm one day, distant the next. Consistency slips.",
+      "behaviours": [
+        { "id": "A", "label": "I keep my own rhythm." },
+        { "id": "B", "label": "I name the inconsistency." },
+        { "id": "C", "label": "I take a step back." },
+        { "id": "D", "label": "I stay steady and warm." }
+      ],
+      "interpretations": [
+        { "id": "1", "label": "Everyone fluctuates." },
+        { "id": "2", "label": "I notice patterns." },
+        { "id": "3", "label": "I want steadiness." },
+        { "id": "4", "label": "What settles, stays." }
+      ]
+    },
+    {
+      "id": "card_09",
+      "title": "The Vulnerable Share",
+      "scenario": "They open up about something real.",
+      "behaviours": [
+        { "id": "A", "label": "I meet it with care." },
+        { "id": "B", "label": "I share something small." },
+        { "id": "C", "label": "I listen quietly." },
+        { "id": "D", "label": "I support without pushing." }
+      ],
+      "interpretations": [
+        { "id": "1", "label": "Vulnerability builds trust." },
+        { "id": "2", "label": "I feel honoured." },
+        { "id": "3", "label": "I need pacing." },
+        { "id": "4", "label": "Everyone opens differently." }
+      ]
+    },
+    {
+      "id": "card_10",
+      "title": "The Space Moment",
+      "scenario": "They say they need some space.",
+      "behaviours": [
+        { "id": "A", "label": "I respect it." },
+        { "id": "B", "label": "I check gently." },
+        { "id": "C", "label": "I step back fully." },
+        { "id": "D", "label": "I keep a light connection." }
+      ],
+      "interpretations": [
+        { "id": "1", "label": "Everyone needs space." },
+        { "id": "2", "label": "Space is meaningful." },
+        { "id": "3", "label": "This brings up old fears." },
+        { "id": "4", "label": "Healthy pacing protects connection." }
+      ]
+    },
+    {
+      "id": "card_11",
+      "title": "The Silence Patch",
+      "scenario": "The conversation slows.",
+      "behaviours": [
+        { "id": "A", "label": "I send a light prompt." },
+        { "id": "B", "label": "I let silence breathe." },
+        { "id": "C", "label": "I match the pace." },
+        { "id": "D", "label": "I stay patient." }
+      ],
+      "interpretations": [
+        { "id": "1", "label": "Silence isn't negative." },
+        { "id": "2", "label": "Silence = distance." },
+        { "id": "3", "label": "I want reciprocity." },
+        { "id": "4", "label": "Connection has ebbs." }
+      ]
+    },
+    {
+      "id": "card_12",
+      "title": "The Steady Energy",
+      "scenario": "They're consistent, engaged, and warm.",
+      "behaviours": [
+        { "id": "A", "label": "I lean in slowly." },
+        { "id": "B", "label": "I mirror the energy." },
+        { "id": "C", "label": "I take my time." },
+        { "id": "D", "label": "I reciprocate openly." }
+      ],
+      "interpretations": [
+        { "id": "1", "label": "Consistency means safety." },
+        { "id": "2", "label": "I value stable pace." },
+        { "id": "3", "label": "I'm hopeful but careful." },
+        { "id": "4", "label": "Good connection feels easy." }
+      ]
+    }
+  ]
+}

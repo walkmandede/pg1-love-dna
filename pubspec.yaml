@@ -1,0 +1,37 @@
+name: pg1
+description: "A new Flutter project."
+publish_to: "none"
+version: 0.1.0
+
+environment:
+  sdk: ^3.9.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # # Firebase Core - Required to initialize Firebase services
+  # firebase_core: ^2.24.2
+  # # Cloud Firestore - Store session results in database
+  # cloud_firestore: ^4.15.8
+  # # Bloc - State management for card flow and session state
+  flutter_bloc: ^9.1.1
+  # Go Router - Handle navigation between onboarding, cards, and results
+  go_router: ^17.0.0
+  # UUID - Generate unique session IDs
+  uuid: ^4.3.3
+  # Equatable - Simplify equality comparisons in models and Bloc states
+  equatable: ^2.0.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/json/cards-json.json
+    - assets/json/mappings-json.json
+    - assets/json/centroids-json.json
+    - assets/json/narratives-json.json
