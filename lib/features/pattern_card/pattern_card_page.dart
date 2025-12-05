@@ -8,6 +8,7 @@ import 'package:pg1/core/shared/constants/app_constants.dart';
 import 'package:pg1/core/shared/extensions/int_extension.dart';
 import 'package:pg1/core/shared/theme/app_color.dart';
 import 'package:pg1/core/shared/widgets/app_button.dart';
+import 'package:pg1/core/shared/widgets/app_progress_bar.dart';
 import 'package:pg1/core/shared/widgets/disclosure_message_widget.dart';
 import 'package:pg1/core/states/session/cubit/session_cubit.dart';
 
@@ -31,6 +32,8 @@ class _PatternCardPageState extends State<PatternCardPage> {
 
   SessionCubit get _sessiobCubit => context.read<SessionCubit>();
 
+  int get currentIndex => _sessiobCubit.state.cards.map((c) => c.id).toList().indexOf(_card.id);
+
   @override
   void initState() {
     super.initState();
@@ -53,7 +56,21 @@ class _PatternCardPageState extends State<PatternCardPage> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                if (kDebugMode) Text(_card.id),
+                16.heightGap,
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: InkWell(
+                    onTap: () {
+                      context.pop();
+                    },
+                    child: Icon(
+                      Icons.arrow_back_ios,
+                    ),
+                  ),
+                ),
+                16.heightGap,
+                AppProgressBar(label: 'Card', current: currentIndex + 1, total: 12),
+                16.heightGap,
                 _patternTitle(),
                 16.heightGap,
                 _scenarioCard(),

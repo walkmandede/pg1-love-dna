@@ -62,7 +62,7 @@ class _InterpretationLenPageState extends State<InterpretationLenPage> {
                 16.heightGap,
                 Text(
                   _patternInsight.subtitle,
-                  style: AppTextStyles.patternCardLabel,
+                  style: AppTextStyles.subtitleMedium,
                   textAlign: TextAlign.center,
                 ),
                 16.heightGap,
@@ -160,7 +160,7 @@ class _InterpretationLenPageState extends State<InterpretationLenPage> {
               children: [
                 AppSvgWidget(
                   svgString: t.svgPath,
-                  size: Size(16, 16),
+                  size: Size(12, 12),
                 ),
                 8.widthGap,
                 Text(

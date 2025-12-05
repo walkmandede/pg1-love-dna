@@ -142,10 +142,10 @@ class AppTextStyles {
 
   // 17. Bullet Point - List items in insights
   static const TextStyle bulletPoint = TextStyle(
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: FontWeight.w600,
     color: _darkGray,
-    height: 1.35,
+    height: 1.2,
   );
 
   // 18. Tag Label - Pills like "Social mirroring"
@@ -159,16 +159,16 @@ class AppTextStyles {
   // 19. Input Placeholder - Placeholder text in text fields
   static const TextStyle inputPlaceholder = TextStyle(
     fontSize: 16,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w600,
     color: _veryLightGray,
     height: 1.4,
   );
 
   // 20. Input Label - "Email address" label
   static const TextStyle inputLabel = TextStyle(
-    fontSize: 14,
-    fontWeight: FontWeight.w500,
-    color: _mediumGray,
+    fontSize: 24,
+    fontWeight: FontWeight.w700,
+    color: _black,
     height: 1.3,
   );
 
@@ -218,5 +218,26 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
     color: _lightGray,
     height: 1.3,
+  );
+
+  static const TextStyle subtitle = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    color: _mediumGray,
+    height: 1.4,
+  );
+
+  static const TextStyle subtitleSmall = TextStyle(
+    fontSize: 12,
+    fontWeight: FontWeight.w600,
+    color: _mediumGray,
+    height: 1.5,
+  );
+
+  static const TextStyle subtitleMedium = TextStyle(
+    fontSize: 13,
+    fontWeight: FontWeight.w600,
+    color: _mediumGray,
+    height: 1.4,
   );
 }

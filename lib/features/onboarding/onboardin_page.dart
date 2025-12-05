@@ -6,6 +6,7 @@ import 'package:pg1/core/shared/constants/app_constants.dart';
 import 'package:pg1/core/shared/extensions/build_context_extension.dart';
 import 'package:pg1/core/shared/extensions/int_extension.dart';
 import 'package:pg1/core/shared/theme/app_color.dart';
+import 'package:pg1/core/shared/theme/app_text_styles.dart';
 import 'package:pg1/core/shared/widgets/app_button.dart';
 import 'package:pg1/core/shared/widgets/app_svg_widget.dart';
 import 'package:pg1/core/shared/widgets/disclosure_message_widget.dart';
@@ -46,13 +47,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
               Text(
                 'Find your Love Code\nin 3 minutes.',
                 textAlign: TextAlign.center,
-                style: context.titleMedium,
+                style: AppTextStyles.cardTitle,
               ),
               8.heightGap,
               Text(
                 'Quick, private, and grounded in emotional\npatterns',
                 textAlign: TextAlign.center,
-                style: context.labelMedium,
+                style: AppTextStyles.subtitle,
               ),
               32.heightGap,
               Row(
@@ -84,9 +85,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 },
                 child: Text(
                   'How TWLVE work',
-                  style: TextStyle(
+                  style: AppTextStyles.linkText.copyWith(
                     decoration: TextDecoration.underline,
-                    color: AppColor.buttonBase,
                   ),
                 ),
               ),

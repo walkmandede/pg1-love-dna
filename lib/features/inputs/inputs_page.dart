@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pg1/core/shared/constants/app_constants.dart';
 import 'package:pg1/core/shared/extensions/int_extension.dart';
-import 'package:pg1/core/shared/theme/app_color.dart';
 import 'package:pg1/core/shared/widgets/app_button.dart';
 import 'package:pg1/core/shared/widgets/disclosure_message_widget.dart';
 import 'package:pg1/features/inputs/inputs_page_controller.dart';
@@ -36,6 +35,7 @@ class _InputsPageState extends State<InputsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SizedBox.expand(
         child: Padding(
           padding: EdgeInsets.all(kBasePaddingM),

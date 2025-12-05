@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pg1/core/shared/extensions/int_extension.dart';
 import 'package:pg1/core/shared/theme/app_color.dart';
+import 'package:pg1/core/shared/theme/app_text_styles.dart';
 import 'package:pg1/core/shared/widgets/app_text.dart';
 import 'package:pg1/core/shared/widgets/app_text_field.dart';
 import 'package:pg1/features/inputs/inputs_page_controller.dart';
@@ -16,7 +17,10 @@ class AgeInput extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SemiTitleText(text: 'How old are you?'),
+        Text(
+          'How old are you?',
+          style: AppTextStyles.inputLabel,
+        ),
         32.heightGap,
         AppTextField(
           hintText: 'Enter your age',
@@ -26,11 +30,7 @@ class AgeInput extends StatelessWidget {
         Text(
           'This helps us understand who is discovering\nTWLVE. It does not affect your result.',
           textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.normal,
-            color: AppColor.textSecondary,
-          ),
+          style: AppTextStyles.subtitleMedium,
         ),
       ],
     );

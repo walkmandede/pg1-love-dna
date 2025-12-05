@@ -16,13 +16,16 @@ class Pg1App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => SessionCubit(),
-      child: MaterialApp.router(
-        title: 'Pg1 Love DNA',
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme.themeData,
-        routerConfig: AppRouter.router,
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1)),
+      child: BlocProvider(
+        create: (context) => SessionCubit(),
+        child: MaterialApp.router(
+          title: 'TWLVE',
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.themeData,
+          routerConfig: AppRouter.router,
+        ),
       ),
     );
   }

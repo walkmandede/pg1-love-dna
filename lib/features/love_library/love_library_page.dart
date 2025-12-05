@@ -4,6 +4,7 @@ import 'package:pg1/core/shared/extensions/build_context_extension.dart';
 import 'package:pg1/core/shared/extensions/card_model_extension.dart';
 import 'package:pg1/core/shared/extensions/int_extension.dart';
 import 'package:pg1/core/shared/theme/app_color.dart';
+import 'package:pg1/core/shared/theme/app_text_styles.dart';
 import 'package:pg1/core/shared/widgets/app_button.dart';
 import 'package:pg1/core/shared/widgets/app_loading_widget.dart';
 import 'package:pg1/core/shared/widgets/app_svg_widget.dart';
@@ -59,18 +60,17 @@ class _LoveLibraryPageState extends State<LoveLibraryPage> {
           child: Column(
             children: [
               8.heightGap,
-              TitleText(text: _isCompleted ? 'All 12 patterns' : 'Your Love Library'),
+              Text(
+                _isCompleted ? 'All 12 patterns' : 'Your Love Library',
+                style: AppTextStyles.cardTitle,
+              ),
               16.heightGap,
               Text(
                 _isCompleted
                     ? 'You\'ve completed your example patterns.\nHere\'s the full picture.'
                     : 'You\'ll complete 12 short cards. Each card\nidentifies a pattern.',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: AppColor.textSecondary,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: AppTextStyles.subtitle,
               ),
               16.heightGap,
               _cards(),
@@ -143,9 +143,8 @@ class _LoveLibraryPageState extends State<LoveLibraryPage> {
                         child: Text(
                           'Pattern\n$number',
                           textAlign: TextAlign.center,
-                          style: context.bodyMedium.copyWith(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
+                          style: AppTextStyles.bodyTextSmall.copyWith(
+                            fontWeight: FontWeight.w700,
                             height: 1.1,
                             color: isAnswered ? AppColor.textBase : AppColor.diableGrey,
                           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pg1/core/shared/theme/app_color.dart';
+import 'package:pg1/core/shared/theme/app_text_styles.dart';
 import 'package:pg1/core/shared/widgets/app_svg_widget.dart';
 
 class WhiteCard extends StatelessWidget {
@@ -46,10 +47,7 @@ class WhiteCard extends StatelessWidget {
                         alignment: Alignment.topCenter,
                         child: Text(
                           title,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14,
-                          ),
+                          style: AppTextStyles.tagLabel.copyWith(fontWeight: FontWeight.w700),
                         ),
                       ),
                     ),

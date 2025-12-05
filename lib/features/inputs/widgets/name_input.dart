@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pg1/core/shared/extensions/int_extension.dart';
 import 'package:pg1/core/shared/theme/app_color.dart';
+import 'package:pg1/core/shared/theme/app_text_styles.dart';
 import 'package:pg1/core/shared/widgets/app_text.dart';
 import 'package:pg1/core/shared/widgets/app_text_field.dart';
 import 'package:pg1/features/inputs/inputs_page_controller.dart';
@@ -16,7 +17,10 @@ class NameInput extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SemiTitleText(text: 'What\'s your name?'),
+        Text(
+          'What\'s your name?',
+          style: AppTextStyles.inputLabel,
+        ),
         32.heightGap,
         AppTextField(
           hintText: 'Enter your name',
