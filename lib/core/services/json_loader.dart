@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:pg1/core/models/pattern-insight.dart';
 import '../models/card_model.dart';
 import '../models/choice_model.dart';
 import '../models/trait_vector.dart';
@@ -64,6 +65,19 @@ class JsonLoader {
     types.forEach((typeName, narrative) {
       result[typeName] = {'title': narrative['title'] as String, 'short': narrative['short'] as String, 'long': narrative['long'] as String};
     });
+    return result;
+  }
+
+  static Future<Map<String, PatternInsight>> loadPatternInsights() async {
+    final String jsonString = await rootBundle.loadString('assets/json/pattern-insights-json.json');
+    final Map<String, dynamic> data = json.decode(jsonString);
+
+    final Map<String, PatternInsight> result = {};
+
+    data.forEach((patternId, json) {
+      result[patternId] = PatternInsight.fromJson(json);
+    });
+
     return result;
   }
 }

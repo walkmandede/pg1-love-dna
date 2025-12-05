@@ -21,6 +21,7 @@ dependencies:
   uuid: ^4.3.3
   # Equatable - Simplify equality comparisons in models and Bloc states
   equatable: ^2.0.5
+  flutter_svg: ^2.2.3
 
 dev_dependencies:
   flutter_test:
@@ -35,3 +36,40 @@ flutter:
     - assets/json/mappings-json.json
     - assets/json/centroids-json.json
     - assets/json/narratives-json.json
+    - assets/json/pattern-insights-json.json
+
+  
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/font/inter/Inter_18pt-Light.ttf
+          weight: 300
+        - asset: assets/font/inter/Inter_18pt-Regular.ttf
+          weight: 400
+        - asset: assets/font/inter/Inter_18pt-Medium.ttf
+          weight: 500
+        - asset: assets/font/inter/Inter_18pt-SemiBold.ttf
+          weight: 600
+        - asset: assets/font/inter/Inter_18pt-Bold.ttf
+          weight: 700
+    
+    - family: SFProText
+      fonts:
+        - asset: assets/font/text/SF-Pro-Text-Ultralight.otf
+          weight: 100
+        - asset: assets/font/text/SF-Pro-Text-Thin.otf
+          weight: 200
+        - asset: assets/font/text/SF-Pro-Text-Light.otf
+          weight: 300
+        - asset: assets/font/text/SF-Pro-Text-Regular.otf
+          weight: 400
+        - asset: assets/font/text/SF-Pro-Text-Medium.otf
+          weight: 500
+        - asset: assets/font/text/SF-Pro-Text-Semibold.otf
+          weight: 600
+        - asset: assets/font/text/SF-Pro-Text-Bold.otf
+          weight: 700
+        - asset: assets/font/text/SF-Pro-Text-Heavy.otf
+          weight: 800
+        - asset: assets/font/text/SF-Pro-Text-Black.otf
+          weight: 900
