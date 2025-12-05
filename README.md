@@ -31,7 +31,8 @@ git checkout gh-pages
 
 # Remove old files and copy new build
 git rm -rf .
-git checkout main -- .gitignore  # Keep .gitignore
+# Keep .gitignore
+git checkout main -- .gitignore  
 cp -r build/web/* .
 
 # Commit and push
