@@ -4,6 +4,7 @@ import 'package:pg1/core/shared/constants/app_constants.dart';
 import 'package:pg1/core/shared/extensions/build_context_extension.dart';
 import 'package:pg1/core/shared/extensions/int_extension.dart';
 import 'package:pg1/core/shared/theme/app_color.dart';
+import 'package:pg1/core/shared/theme/app_text_styles.dart';
 import 'package:pg1/core/shared/widgets/app_svg_widget.dart';
 import 'package:pg1/features/splash/splash_page_controller.dart';
 
@@ -50,7 +51,8 @@ class _SplashPageState extends State<SplashPage> {
                 ),
                 16.heightGap,
                 Text(
-                  'Initialising the Love Engine...',
+                  'Initialising the Love Engine...\nv1.0.1',
+                  style: AppTextStyles.cardTitle,
                 ),
               ],
             ),
