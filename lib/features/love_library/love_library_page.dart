@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pg1/core/models/card_model.dart';
 import 'package:pg1/core/shared/constants/app_constants.dart';
 import 'package:pg1/core/shared/extensions/build_context_extension.dart';
 import 'package:pg1/core/shared/extensions/card_model_extension.dart';
@@ -23,6 +24,7 @@ class _LoveLibraryPageState extends State<LoveLibraryPage> {
   final LoveLibraryController _controller = LoveLibraryController();
 
   bool get _isCompleted => _controller.sessionCubit.state.answers.length == 12;
+  List<CardModel> get cards => _controller.sessionCubit.state.cards;
 
   @override
   void initState() {
@@ -93,25 +95,85 @@ class _LoveLibraryPageState extends State<LoveLibraryPage> {
   }
 
   Widget _cards() {
-    final cards = _controller.sessionCubit.state.cards;
-    return GridView.builder(
-      padding: EdgeInsets.zero,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        childAspectRatio: 1,
-        mainAxisSpacing: 6,
-        crossAxisSpacing: 6,
-      ),
-      itemCount: cards.length,
-      itemBuilder: (context, index) {
-        final card = cards[index];
-        int number = index + 1;
-        // final bool isAnswered = (_controller.sessionCubit.state.answers.map((a) => a.cardId).contains(card.id));
-        final bool isAnswered = index <= _controller.sessionCubit.currentCardIndex;
+    print(cards);
+    return Column(
+      spacing: 8,
+      children: [
+        Row(
+          spacing: 8,
+          children: [_card(0), _card(1), _card(2)],
+        ),
+        Row(
+          spacing: 8,
+          children: [_card(3), _card(4), _card(5)],
+        ),
+        Row(
+          spacing: 8,
+          children: [_card(6), _card(7), _card(8)],
+        ),
+        Row(
+          spacing: 8,
+          children: [_card(9), _card(10), _card(11)],
+        ),
+      ],
+    );
+  }
 
-        return LayoutBuilder(
+  Widget _card(int index) {
+    final card = cards[index];
+    int number = index + 1;
+    // final bool isAnswered = (_controller.sessionCubit.state.answers.map((a) => a.cardId).contains(card.id));
+    final bool isAnswered = index <= _controller.sessionCubit.currentCardIndex;
+    return Expanded(
+      child: AspectRatio(
+        aspectRatio: 1,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Card(
+              elevation: isAnswered ? 5 : 0,
+              shadowColor: AppColor.backgroundGrey.withAlpha(25),
+              color: AppColor.backgroundSecondary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadiusGeometry.circular(12),
+                side: BorderSide(
+                  color: isAnswered ? AppColor.primary : Colors.transparent,
+                  width: 1.5,
+                ),
+              ),
+              child: Padding(
+                padding: EdgeInsetsGeometry.all(constraints.maxHeight * 0.05),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AppSvgWidget(
+                      svgString: card.svgIconString,
+                      size: Size.fromRadius(constraints.maxHeight * 0.125),
+                      color: isAnswered ? AppColor.primary : AppColor.diableGrey,
+                    ),
+                    (constraints.maxHeight * 0.1).toInt().heightGap,
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: Text(
+                        'Pattern\n$number',
+                        textAlign: TextAlign.center,
+                        style: AppTextStyles.bodyTextSmall.copyWith(
+                          fontWeight: FontWeight.w700,
+                          height: 1.1,
+                          color: isAnswered ? AppColor.textBase : AppColor.diableGrey,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+    return Expanded(
+      child: SizedBox(
+        child: LayoutBuilder(
           builder: (context, constraints) {
             return Card(
               elevation: isAnswered ? 5 : 0,
@@ -128,26 +190,20 @@ class _LoveLibraryPageState extends State<LoveLibraryPage> {
                 padding: EdgeInsetsGeometry.all(constraints.maxHeight * 0.05),
                 child: Column(
                   children: [
-                    Expanded(
-                      flex: 3,
-                      child: AppSvgWidget(
-                        svgString: card.svgIconString,
-                        size: Size.fromRadius(constraints.maxHeight * 0.125),
-                        color: isAnswered ? AppColor.primary : AppColor.diableGrey,
-                      ),
+                    AppSvgWidget(
+                      svgString: card.svgIconString,
+                      size: Size.fromRadius(constraints.maxHeight * 0.125),
+                      color: isAnswered ? AppColor.primary : AppColor.diableGrey,
                     ),
-                    Expanded(
-                      flex: 2,
-                      child: Align(
-                        alignment: Alignment.topCenter,
-                        child: Text(
-                          'Pattern\n$number',
-                          textAlign: TextAlign.center,
-                          style: AppTextStyles.bodyTextSmall.copyWith(
-                            fontWeight: FontWeight.w700,
-                            height: 1.1,
-                            color: isAnswered ? AppColor.textBase : AppColor.diableGrey,
-                          ),
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: Text(
+                        'Pattern\n$number',
+                        textAlign: TextAlign.center,
+                        style: AppTextStyles.bodyTextSmall.copyWith(
+                          fontWeight: FontWeight.w700,
+                          height: 1.1,
+                          color: isAnswered ? AppColor.textBase : AppColor.diableGrey,
                         ),
                       ),
                     ),
@@ -156,8 +212,8 @@ class _LoveLibraryPageState extends State<LoveLibraryPage> {
               ),
             );
           },
-        );
-      },
+        ),
+      ),
     );
   }
 }

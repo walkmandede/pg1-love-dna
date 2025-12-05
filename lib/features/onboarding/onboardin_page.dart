@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pg1/core/routes/app_routes.dart';
 import 'package:pg1/core/shared/assets/app_svgs.dart';
@@ -11,6 +12,7 @@ import 'package:pg1/core/shared/widgets/app_button.dart';
 import 'package:pg1/core/shared/widgets/app_svg_widget.dart';
 import 'package:pg1/core/shared/widgets/disclosure_message_widget.dart';
 import 'package:pg1/core/shared/widgets/white_card.dart';
+import 'package:pg1/core/states/session/cubit/session_cubit.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});

@@ -24,6 +24,7 @@ class SessionCubit extends Cubit<SessionState> {
     try {
       // Load all JSON data
       final cards = await JsonLoader.loadCards();
+
       final behaviourMappings = await JsonLoader.loadBehaviourMappings();
       final interpretationMappings = await JsonLoader.loadInterpretationMappings();
       final centroids = await JsonLoader.loadCentroids();

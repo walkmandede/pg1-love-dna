@@ -20,6 +20,7 @@ class AddressInput extends StatelessWidget {
         Text(
           'Where do you live?',
           style: AppTextStyles.inputLabel,
+          textAlign: TextAlign.center,
         ),
         32.heightGap,
         AppTextField(

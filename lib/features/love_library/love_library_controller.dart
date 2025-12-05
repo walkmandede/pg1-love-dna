@@ -15,8 +15,10 @@ class LoveLibraryController extends AppPageController {
 
   @override
   Future<void> initLoad(BuildContext context) async {
+    isInitLoading.value = true;
     sessionCubit = context.read<SessionCubit>();
     isInitLoading.value = false;
+    print(sessionCubit.state.cards);
   }
 
   void onBeginCardPressed(BuildContext context) async {

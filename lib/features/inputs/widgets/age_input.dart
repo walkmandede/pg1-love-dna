@@ -20,6 +20,7 @@ class AgeInput extends StatelessWidget {
         Text(
           'How old are you?',
           style: AppTextStyles.inputLabel,
+          textAlign: TextAlign.center,
         ),
         32.heightGap,
         AppTextField(
@@ -30,7 +31,11 @@ class AgeInput extends StatelessWidget {
         Text(
           'This helps us understand who is discovering\nTWLVE. It does not affect your result.',
           textAlign: TextAlign.center,
-          style: AppTextStyles.subtitleMedium,
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.normal,
+            color: AppColor.textSecondary,
+          ),
         ),
       ],
     );

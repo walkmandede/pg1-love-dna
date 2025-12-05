@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:pg1/core/shared/theme/app_color.dart';
 import 'package:pg1/core/shared/theme/app_text_styles.dart';
@@ -29,7 +31,7 @@ class WhiteCard extends StatelessWidget {
                       child: CircleAvatar(
                         backgroundColor: AppColor.primary,
                         child: Padding(
-                          padding: EdgeInsets.all(constraints.maxHeight * 0.075),
+                          padding: EdgeInsets.all(min(constraints.maxHeight * 0.075, 12)),
                           child: AppSvgWidget(
                             svgString: iconPath,
                             size: Size(constraints.maxHeight * 0.25, constraints.maxHeight * 0.25),

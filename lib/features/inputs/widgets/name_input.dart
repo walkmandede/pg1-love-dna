@@ -20,6 +20,7 @@ class NameInput extends StatelessWidget {
         Text(
           'What\'s your name?',
           style: AppTextStyles.inputLabel,
+          textAlign: TextAlign.center,
         ),
         32.heightGap,
         AppTextField(

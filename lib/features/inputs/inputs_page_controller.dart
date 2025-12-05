@@ -34,7 +34,7 @@ class InputsPageController extends AppPageController {
   }
 
   void _onPageChanged() async {
-    currentPageIndex.value = pageController.page?.floor() ?? 0;
+    currentPageIndex.value = pageController.page?.ceil() ?? 0;
     validateInputField();
   }
 

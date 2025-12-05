@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pg1/core/routes/app_routes.dart';
 import 'package:pg1/core/shared/assets/app_svgs.dart';
 import 'package:pg1/core/shared/constants/app_constants.dart';
 import 'package:pg1/core/shared/extensions/build_context_extension.dart';
 import 'package:pg1/core/shared/extensions/int_extension.dart';
 import 'package:pg1/core/shared/theme/app_color.dart';
 import 'package:pg1/core/shared/theme/app_text_styles.dart';
+import 'package:pg1/core/shared/widgets/app_button.dart';
 import 'package:pg1/core/shared/widgets/app_svg_widget.dart';
 import 'package:pg1/core/states/data/app_data.dart';
 import 'package:pg1/features/splash/splash_page_controller.dart';
@@ -55,6 +58,24 @@ class _SplashPageState extends State<SplashPage> {
                   'Initialising the Love Engine...\n${AppData.version}',
                   style: AppTextStyles.subtitle,
                   textAlign: TextAlign.center,
+                ),
+                ValueListenableBuilder(
+                  valueListenable: _controller.isLoaded,
+                  builder: (context, isLoaded, child) {
+                    if (isLoaded) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: AppButton(
+                          label: 'Start',
+                          onPressed: () {
+                            context.pushNamed(AppRoutes.onboarding.name);
+                          },
+                        ),
+                      );
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  },
                 ),
               ],
             ),

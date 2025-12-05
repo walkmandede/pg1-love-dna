@@ -46,10 +46,22 @@ class _InputsPageState extends State<InputsPage> {
               16.heightGap,
               Expanded(child: _body()),
               16.heightGap,
-              _continueButton(),
-              16.heightGap,
-              DisclosureMessageWidget(),
-              32.heightGap,
+              ValueListenableBuilder(
+                valueListenable: _controller.currentPageIndex,
+                builder: (context, currentPageIndex, child) {
+                  if (currentPageIndex == 3) {
+                    return const SizedBox.shrink();
+                  }
+                  return Column(
+                    children: [
+                      _continueButton(),
+                      16.heightGap,
+                      DisclosureMessageWidget(),
+                      32.heightGap,
+                    ],
+                  );
+                },
+              ),
             ],
           ),
         ),
