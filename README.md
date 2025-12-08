@@ -31,13 +31,12 @@ git checkout gh-pages
 
 # Remove old files and copy new build
 git rm -rf .
-git checkout main -- .gitignore  # Keep .gitignore
+ # Keep .gitignore
+git checkout main -- .gitignore 
 cp -r build/web/* .
 
 # Commit and push
-git add .
-git commit -m "Redeploy web app"
-git push origin gh-pages
+git add .; git commit -m "Redeploy web app"; git push origin gh-pages
 
 # Go back to main branch
 git checkout main

@@ -1,4 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:pg1/core/shared/constants/app_constants.dart';
+import 'package:pg1/core/shared/theme/app_color.dart';
 
 class AppResponsiveBuilder extends StatelessWidget {
   final Widget Function(bool isVertical) verticalBuilder;
@@ -12,15 +15,40 @@ class AppResponsiveBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Get screen dimensions
     final Size screenSize = MediaQuery.of(context).size;
-    final bool xHorizontal = screenSize.width >= screenSize.height;
+    final bool isVertical = screenSize.width < screenSize.height;
 
-    // Build the selected layout with the state passed to the builder
-    return xHorizontal
-        ? verticalBuilder(xHorizontal) // Pass true for horizontal layout
+    final child = isVertical
+        ? verticalBuilder(isVertical)
         : horizontalBuilder != null
-        ? horizontalBuilder!(!xHorizontal) // Pass false for vertical layout
-        : verticalBuilder(xHorizontal); // Fallback to horizontal if no vertical builder
+        ? horizontalBuilder!(!isVertical)
+        : Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: kStandardMaxWidthForPortraitOrientation,
+              ),
+              child: verticalBuilder(isVertical),
+            ),
+          );
+
+    return kDebugMode
+        ? Badge(
+            label: SizedBox(
+              width: screenSize.width * 0.1,
+              height: screenSize.height * 0.05,
+              child: Center(
+                child: FittedBox(
+                  child: Text(
+                    '${isVertical ? 'V-' : 'H-'} ${screenSize.width}:${screenSize.height}',
+                    style: TextStyle(color: AppColor.textBase.withAlpha(100), fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ),
+            offset: Offset(-(screenSize.width * 0.1), (screenSize.height * 0.1 * 0.5)),
+            backgroundColor: (isVertical ? Colors.teal : Colors.orange).withAlpha(100),
+            child: child,
+          )
+        : child;
   }
 }

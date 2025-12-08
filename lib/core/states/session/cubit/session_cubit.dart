@@ -1,8 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pg1/core/models/card_model.dart';
 import 'package:pg1/core/models/choice_model.dart';
-import 'package:pg1/core/models/love_code_result.dart';
-import 'package:pg1/core/models/pattern-insight.dart';
+import 'package:pg1/core/models/pattern_insight.dart';
 import 'package:pg1/core/services/engine_service.dart';
 import 'package:pg1/core/services/json_loader.dart';
 import 'package:pg1/core/shared/logger/app_logger.dart';
@@ -19,6 +18,10 @@ class SessionCubit extends Cubit<SessionState> {
   SessionCubit() : super(SessionState());
 
   int get currentCardIndex => state.answers.length;
+
+  int getIndexOfTheCard(CardModel card) {
+    return state.cards.map((c) => c.id).toList().indexOf(card.id);
+  }
 
   Future<void> startSession() async {
     try {
@@ -61,19 +64,19 @@ class SessionCubit extends Cubit<SessionState> {
     return _patternInsights?[patternId];
   }
 
-  InterpretationLenMeta? addAnswer({required CardModel card, required Behaviour behaviour, required Interpretation interpretation}) {
+  LenPageMeta? addAnswer({required CardModel card, required Behaviour behaviour, required Interpretation interpretation}) {
     final answerCardIds = state.answers.map((a) => a.cardId);
     if (!answerCardIds.contains(card.id)) {
       final cardAnswer = CardAnswer(cardId: card.id, behaviourId: behaviour.id, interpretationId: interpretation.id);
       state.answers.add(cardAnswer);
       emit(state);
 
-      final patternInsight = getPatternInsight(card.patternInsightId);
+      final patternInsight = getPatternInsight(card.behaviourLensPatternId);
       if (patternInsight == null) {
         return null;
       }
 
-      return (cardModel: card, cardAnswer: cardAnswer, patternInsight: getPatternInsight(card.patternInsightId)!);
+      return (cardModel: card, cardAnswer: cardAnswer, patternInsight: getPatternInsight(card.behaviourLensPatternId)!);
     }
     return null;
   }

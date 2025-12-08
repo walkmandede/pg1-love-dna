@@ -4,6 +4,7 @@ import 'package:pg1/core/shared/enums/supporting_traits_enum.dart';
 class PatternInsight extends Equatable {
   final String id;
   final String title;
+  final String coreMeaning;
   final String subtitle;
   final String insight;
   final List<String> bullets;
@@ -12,6 +13,7 @@ class PatternInsight extends Equatable {
   const PatternInsight({
     required this.id,
     required this.title,
+    required this.coreMeaning,
     required this.subtitle,
     required this.insight,
     required this.bullets,
@@ -26,6 +28,7 @@ class PatternInsight extends Equatable {
     return PatternInsight(
       id: json['id'] as String,
       title: json['title'] as String,
+      coreMeaning: json['core_meaning'] as String,
       subtitle: json['subtitle'] as String,
       insight: json['insight'] as String,
       bullets: (json['supporting_bullets'] as List<dynamic>? ?? []).map((e) => e.toString()).toList(),
@@ -34,5 +37,5 @@ class PatternInsight extends Equatable {
   }
 
   @override
-  List<Object?> get props => [id, title, subtitle, insight, bullets, traits];
+  List<Object?> get props => [id, title, coreMeaning, subtitle, insight, bullets, traits];
 }

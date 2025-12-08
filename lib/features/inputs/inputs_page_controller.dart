@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pg1/core/routes/app_routes.dart';
 import 'package:pg1/core/shared/commons/app_controller.dart';
+import 'package:pg1/core/shared/enums/app_location_enum.dart';
 import 'package:pg1/core/shared/enums/gender_enum.dart';
 
 class InputsPageController extends AppPageController {
@@ -11,15 +12,16 @@ class InputsPageController extends AppPageController {
 
   TextEditingController nameField = TextEditingController(text: kDebugMode ? 'Test Name' : '');
   TextEditingController ageField = TextEditingController(text: kDebugMode ? '27' : '');
-  TextEditingController addressField = TextEditingController(text: kDebugMode ? 'Test Address' : '');
   ValueNotifier<GenderEnum?> selectedGender = ValueNotifier(kDebugMode ? GenderEnum.male : null);
+  ValueNotifier<AppLocationEnum?> selectedLocation = ValueNotifier(kDebugMode ? AppLocationEnum.outsideUK : null);
   ValueNotifier<bool> isValidInput = ValueNotifier(kDebugMode ? true : false);
+  ValueNotifier<String?> errorText = ValueNotifier(null);
 
   @override
   Future<void> initLoad(BuildContext context) async {
     pageController.addListener(_onPageChanged);
     nameField.addListener(validateInputField);
-    addressField.addListener(validateInputField);
+    selectedLocation.addListener(validateInputField);
     ageField.addListener(validateInputField);
     selectedGender.addListener(validateInputField);
   }
@@ -29,7 +31,7 @@ class InputsPageController extends AppPageController {
     pageController.removeListener(_onPageChanged);
     nameField.removeListener(validateInputField);
     ageField.removeListener(validateInputField);
-    addressField.removeListener(validateInputField);
+    selectedLocation.removeListener(validateInputField);
     selectedGender.removeListener(validateInputField);
   }
 
@@ -40,25 +42,51 @@ class InputsPageController extends AppPageController {
 
   void validateInputField() {
     isValidInput.value = false;
+    errorText.value = null;
 
     if (currentPageIndex.value == 0) {
       //name
-      if (nameField.text.isNotEmpty) {
+      final isValidName = _isValidName(nameField.text);
+      if (isValidName) {
+        errorText.value = '';
         isValidInput.value = true;
+        return;
+      } else {
+        if (nameField.text.isEmpty) {
+          errorText.value = '';
+        } else {
+          errorText.value = 'Invalid Username';
+        }
         return;
       }
     } else if (currentPageIndex.value == 1) {
       //age
-      if (ageField.text.isNotEmpty) {
-        final age = int.tryParse(ageField.text);
-        if (age != null) {
+
+      final isValidAge = _isValidAge(ageField.text);
+      if (!isValidAge) {
+        if (ageField.text.isEmpty) {
+          errorText.value = '';
+        } else {
+          errorText.value = 'Invalid Age Format';
+        }
+        return;
+      } else {
+        if (_isUnderage(ageField.text)) {
+          if (ageField.text.isEmpty) {
+            errorText.value = '';
+          } else {
+            errorText.value = 'You must be at least 18 years old.';
+          }
+          return;
+        } else {
+          errorText.value = '';
           isValidInput.value = true;
           return;
         }
       }
     } else if (currentPageIndex.value == 2) {
       //address
-      if (addressField.text.isNotEmpty) {
+      if (selectedGender.value != null) {
         isValidInput.value = true;
         return;
       }
@@ -71,6 +99,54 @@ class InputsPageController extends AppPageController {
     }
 
     isValidInput.value = false;
+  }
+
+  bool _isValidName(String? name) {
+    if (name == null) return false;
+
+    final trimmed = name.trim();
+
+    if (trimmed.length < 2) return false;
+
+    final regex = RegExp(r"^[A-Za-z\- ]+$");
+
+    return regex.hasMatch(trimmed);
+  }
+
+  bool _isValidAge(String? ageString) {
+    if (ageString == null) return false;
+
+    final trimmed = ageString.trim();
+
+    if (!RegExp(r"^[0-9]+$").hasMatch(trimmed)) return false;
+
+    if (trimmed.length != 2) return false;
+
+    final age = int.tryParse(trimmed);
+    if (age == null) return false;
+
+    return true;
+  }
+
+  bool _isUnderage(String? ageString) {
+    if (ageString == null) return false;
+
+    final age = int.tryParse(ageString);
+    if (age == null) return false;
+
+    return age < 18;
+  }
+
+  bool _isValidLocation(String? location) {
+    if (location == null) return false;
+
+    const allowed = {
+      "London",
+      "Other (UK)",
+      "Outside UK",
+    };
+
+    return allowed.contains(location);
   }
 
   Future<void> onContinuePressed(BuildContext context) async {
@@ -86,5 +162,17 @@ class InputsPageController extends AppPageController {
 
   void onGenderSelected(GenderEnum gender) {
     selectedGender.value = gender;
+  }
+
+  void onLocationSelected(AppLocationEnum location) {
+    selectedLocation.value = location;
+  }
+
+  Future<void> onClickBack(BuildContext context) async {
+    if (pageController.page == 0) {
+      context.pop();
+    } else {
+      await pageController.previousPage(duration: const Duration(milliseconds: 150), curve: Curves.linear);
+    }
   }
 }

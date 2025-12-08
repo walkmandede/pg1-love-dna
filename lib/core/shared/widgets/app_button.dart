@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:pg1/core/shared/constants/app_constants.dart';
 import 'package:pg1/core/shared/theme/app_color.dart';
@@ -69,7 +71,7 @@ class _AppButtonState extends State<AppButton> {
   bool get _disabled => widget.isDisabled || widget.onPressed == null;
 
   // -------------------------------
-  // Background Color Logic
+  // Background Color Logic - FIXED
   // -------------------------------
   Color get _backgroundColor {
     if (_disabled) {
@@ -77,11 +79,12 @@ class _AppButtonState extends State<AppButton> {
     }
 
     if (_isPressed) {
-      return widget.bgColorPressed ?? (widget.bgColor != null ? _darken(widget.bgColor!, 0.15) : _darken(_base, 0.15));
+      // Use lighter color for pressed to make it visible
+      return widget.bgColorPressed ?? (widget.bgColor != null ? _lighten(widget.bgColor!, 0.15) : _lighten(_base, 0.15));
     }
 
     if (_isHovered) {
-      return widget.bgColorHover ?? (widget.bgColor != null ? _darken(widget.bgColor!, 0.10) : _darken(_base, 0.10));
+      return widget.bgColorHover ?? (widget.bgColor != null ? _lighten(widget.bgColor!, 0.05) : _lighten(_base, 0.05));
     }
 
     return widget.bgColor ?? _base;
@@ -125,17 +128,17 @@ class _AppButtonState extends State<AppButton> {
     return widget.borderColor ?? Colors.transparent;
   }
 
-  // Scale logic
   double get _scale {
     if (_disabled) return 1.0;
-    if (_isPressed) return 1.0;
-    if (_isHovered) return 1.02;
+    if (_isPressed) return 0.98;
+    if (_isHovered) return 0.975;
     return 1.0;
   }
 
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
+      cursor: _disabled ? SystemMouseCursors.forbidden : SystemMouseCursors.click,
       onEnter: (_) {
         if (!_disabled) setState(() => _isHovered = true);
       },
@@ -157,15 +160,26 @@ class _AppButtonState extends State<AppButton> {
         },
         child: AnimatedScale(
           scale: _scale,
-          duration: const Duration(milliseconds: 120),
+          duration: const Duration(milliseconds: 150),
+          curve: Curves.easeInOut,
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 120),
+            duration: const Duration(milliseconds: 150),
+            curve: Curves.easeInOut,
             height: widget.height ?? kBaseButtonHeight,
             width: widget.width ?? double.infinity,
             decoration: BoxDecoration(
               color: _backgroundColor,
               borderRadius: BorderRadius.circular(widget.borderRadius),
               border: Border.all(color: _borderColor, width: 0.75),
+              boxShadow: _isHovered && !_disabled
+                  ? [
+                      BoxShadow(
+                        color: (_base).withOpacity(0.2),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
+                      ),
+                    ]
+                  : null,
             ),
             alignment: Alignment.center,
             child: Text(
@@ -183,12 +197,22 @@ class _AppButtonState extends State<AppButton> {
   }
 
   // Darken helper
-  Color _darken(Color color, double amount) {
+  // Color _darken(Color color, double amount) {
+  //   amount = amount.clamp(0, 1);
+  //   final hsl = HSLColor.fromColor(color);
+  //   final darker = hsl.withLightness(
+  //     (hsl.lightness - amount * hsl.lightness).clamp(0.0, 1.0),
+  //   );
+  //   return darker.toColor();
+  // }
+
+  // Lighten helper - NEW
+  Color _lighten(Color color, double amount) {
     amount = amount.clamp(0, 1);
     final hsl = HSLColor.fromColor(color);
-    final darker = hsl.withLightness(
-      (hsl.lightness - amount * hsl.lightness).clamp(0.0, 1.0),
+    final lighter = hsl.withLightness(
+      (hsl.lightness + amount * (1 - hsl.lightness)).clamp(0.0, 1.0),
     );
-    return darker.toColor();
+    return lighter.toColor();
   }
 }

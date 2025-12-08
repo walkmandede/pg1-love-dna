@@ -1,10 +1,14 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pg1/core/routes/app_routes.dart';
 import 'package:pg1/core/shared/constants/app_constants.dart';
-import 'package:pg1/core/shared/extensions/int_extension.dart';
+import 'package:pg1/core/shared/extensions/build_context_extension.dart';
+import 'package:pg1/core/shared/extensions/num_extension.dart';
 import 'package:pg1/core/shared/theme/app_color.dart';
 import 'package:pg1/core/shared/widgets/app_button.dart';
+import 'package:pg1/core/shared/widgets/app_responsive_builder.dart';
 import 'package:pg1/core/shared/widgets/disclosure_message_widget.dart';
 
 class WhyTheseMomentPage extends StatefulWidget {
@@ -19,17 +23,26 @@ class _WhyTheseMomentPageState extends State<WhyTheseMomentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SizedBox.expand(
-        child: Padding(
-          padding: EdgeInsetsGeometry.all(kBasePaddingM),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _whyTheseMomentCard(),
-              32.heightGap,
-              DisclosureMessageWidget(),
-            ],
-          ),
+        child: AppResponsiveBuilder(
+          verticalBuilder: (isVertical) {
+            return Padding(
+              padding: EdgeInsetsGeometry.all(kBasePaddingM),
+              child: Center(
+                child: SizedBox(
+                  width: min(context.screenWidth, kStandardMaxWidthForPortraitOrientation * 0.75),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      _whyTheseMomentCard(),
+                      32.heightGap,
+                      DisclosureMessageWidget(),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
         ),
       ),
     );

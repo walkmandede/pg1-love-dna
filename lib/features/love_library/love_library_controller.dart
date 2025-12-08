@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pg1/core/models/card_model.dart';
 import 'package:pg1/core/routes/app_routes.dart';
 import 'package:pg1/core/shared/commons/app_controller.dart';
+import 'package:pg1/core/shared/type_defs/type_defs.dart';
 import 'package:pg1/core/states/session/cubit/session_cubit.dart';
 
 class LoveLibraryController extends AppPageController {
@@ -18,13 +20,22 @@ class LoveLibraryController extends AppPageController {
     isInitLoading.value = true;
     sessionCubit = context.read<SessionCubit>();
     isInitLoading.value = false;
-    print(sessionCubit.state.cards);
   }
 
   void onBeginCardPressed(BuildContext context) async {
-    final int lastAnsweredIndex = sessionCubit.state.answers.length;
-    final card = sessionCubit.state.cards[lastAnsweredIndex];
+    final int currentCardIndex = sessionCubit.state.answers.length;
+    if (currentCardIndex < 12) {
+      final card = sessionCubit.state.cards[currentCardIndex];
+      context.pushNamed(AppRoutes.patternCard.name, extra: card);
+    } else {}
+  }
 
-    context.pushNamed(AppRoutes.patternCard.name, extra: card);
+  void onEachCardPressed(BuildContext context, CardModel card, int index) async {
+    final cardAnswer = sessionCubit.state.answers.where((a) => a.cardId == card.id).firstOrNull;
+    final selfViewPattern = sessionCubit.getPatternInsight(card.selfViewLensPatternId);
+    if (cardAnswer != null && selfViewPattern != null) {
+      final LenPageMeta lenPageMeta = (cardModel: card, cardAnswer: cardAnswer, patternInsight: selfViewPattern);
+      context.pushNamed(AppRoutes.selfViewLen.name, extra: lenPageMeta);
+    }
   }
 }

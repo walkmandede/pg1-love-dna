@@ -30,7 +30,8 @@ class Interpretation extends Equatable {
 
 class CardModel extends Equatable {
   final String id;
-  final String patternInsightId;
+  final String behaviourLensPatternId;
+  final String selfViewLensPatternId;
   final String title;
   final String scenario;
   final List<Behaviour> behaviours;
@@ -38,7 +39,8 @@ class CardModel extends Equatable {
 
   const CardModel({
     required this.id,
-    required this.patternInsightId,
+    required this.behaviourLensPatternId,
+    required this.selfViewLensPatternId,
     required this.title,
     required this.scenario,
     required this.behaviours,
@@ -48,7 +50,8 @@ class CardModel extends Equatable {
   factory CardModel.fromJson(Map<String, dynamic> json) {
     return CardModel(
       id: json['id'] as String,
-      patternInsightId: json['patternInsightId'] as String,
+      behaviourLensPatternId: json['behaviourLensPatternId'] as String,
+      selfViewLensPatternId: json['selfViewLensPatternId'] as String,
       title: json['title'] as String,
       scenario: json['scenario'] as String,
       behaviours: (json['behaviours'] as List).map((b) => Behaviour.fromJson(b)).toList(),
@@ -56,7 +59,8 @@ class CardModel extends Equatable {
     );
   }
 
-  String get patternLabel => 'Pattern ${patternInsightId.replaceAll('P', '')}';
+  String get behaviourLensPatternLabel => 'Pattern ${behaviourLensPatternId.replaceAll('P', '')}';
+  String get selfViewLensPatternLabel => 'Pattern ${selfViewLensPatternId.replaceAll('P', '')}';
 
   @override
   List<Object?> get props => [id, title, scenario, behaviours, interpretations];

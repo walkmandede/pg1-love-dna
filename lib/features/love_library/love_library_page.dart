@@ -1,15 +1,21 @@
+// ignore_for_file: deprecated_member_use
+
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:pg1/core/models/card_model.dart';
+import 'package:pg1/core/shared/assets/app_svgs.dart';
 import 'package:pg1/core/shared/constants/app_constants.dart';
+import 'package:pg1/core/shared/enums/pattern_card_state_enum.dart';
 import 'package:pg1/core/shared/extensions/build_context_extension.dart';
 import 'package:pg1/core/shared/extensions/card_model_extension.dart';
-import 'package:pg1/core/shared/extensions/int_extension.dart';
+import 'package:pg1/core/shared/extensions/num_extension.dart';
 import 'package:pg1/core/shared/theme/app_color.dart';
 import 'package:pg1/core/shared/theme/app_text_styles.dart';
 import 'package:pg1/core/shared/widgets/app_button.dart';
 import 'package:pg1/core/shared/widgets/app_loading_widget.dart';
+import 'package:pg1/core/shared/widgets/app_responsive_builder.dart';
 import 'package:pg1/core/shared/widgets/app_svg_widget.dart';
-import 'package:pg1/core/shared/widgets/app_text.dart';
 import 'package:pg1/core/shared/widgets/disclosure_message_widget.dart';
 import 'package:pg1/features/love_library/love_library_controller.dart';
 
@@ -47,7 +53,16 @@ class _LoveLibraryPageState extends State<LoveLibraryPage> {
           if (isInitLoading) {
             return AppLoadingWidget();
           } else {
-            return _body();
+            return AppResponsiveBuilder(
+              verticalBuilder: (isVertical) {
+                return Center(
+                  child: SizedBox(
+                    width: min(context.screenWidth, kStandardMaxWidthForPortraitOrientation - kBasePaddingM),
+                    child: _body(),
+                  ),
+                );
+              },
+            );
           }
         },
       ),
@@ -95,7 +110,6 @@ class _LoveLibraryPageState extends State<LoveLibraryPage> {
   }
 
   Widget _cards() {
-    print(cards);
     return Column(
       spacing: 8,
       children: [
@@ -121,93 +135,119 @@ class _LoveLibraryPageState extends State<LoveLibraryPage> {
 
   Widget _card(int index) {
     final card = cards[index];
-    int number = index + 1;
-    // final bool isAnswered = (_controller.sessionCubit.state.answers.map((a) => a.cardId).contains(card.id));
-    final bool isAnswered = index <= _controller.sessionCubit.currentCardIndex;
+    final int number = index + 1;
+    final int current = _controller.sessionCubit.currentCardIndex;
+
+    // Determine state
+    final isLocked = index > current;
+    final isCurrent = index == current;
+    final isCompleted = index < current;
+
     return Expanded(
       child: AspectRatio(
         aspectRatio: 1,
         child: LayoutBuilder(
           builder: (context, constraints) {
-            return Card(
-              elevation: isAnswered ? 5 : 0,
-              shadowColor: AppColor.backgroundGrey.withAlpha(25),
-              color: AppColor.backgroundSecondary,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadiusGeometry.circular(12),
-                side: BorderSide(
-                  color: isAnswered ? AppColor.primary : Colors.transparent,
-                  width: 1.5,
-                ),
-              ),
-              child: Padding(
-                padding: EdgeInsetsGeometry.all(constraints.maxHeight * 0.05),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    AppSvgWidget(
-                      svgString: card.svgIconString,
-                      size: Size.fromRadius(constraints.maxHeight * 0.125),
-                      color: isAnswered ? AppColor.primary : AppColor.diableGrey,
+            final size = constraints.maxHeight;
+
+            return GestureDetector(
+              onTap: isLocked ? null : () => _controller.onEachCardPressed(context, card, index),
+              child: AnimatedScale(
+                scale: isCurrent ? 1.05 : 1.0,
+                duration: const Duration(milliseconds: 200),
+                child: Card(
+                  elevation: isLocked ? 0 : 4,
+                  shadowColor: AppColor.backgroundGrey.withAlpha(25),
+                  color: AppColor.backgroundSecondary,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    side: BorderSide(
+                      color: isLocked ? AppColor.diableGrey : AppColor.primary,
+                      width: isCurrent ? 2.5 : 1.8,
                     ),
-                    (constraints.maxHeight * 0.1).toInt().heightGap,
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: Text(
-                        'Pattern\n$number',
-                        textAlign: TextAlign.center,
-                        style: AppTextStyles.bodyTextSmall.copyWith(
-                          fontWeight: FontWeight.w700,
-                          height: 1.1,
-                          color: isAnswered ? AppColor.textBase : AppColor.diableGrey,
+                  ),
+                  child: Stack(
+                    children: [
+                      // Main content
+                      Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(constraints.maxHeight * 0.06),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Opacity(
+                                opacity: isLocked ? 0.4 : 1.0,
+                                child: AppSvgWidget(
+                                  svgString: card.svgIconString,
+                                  size: Size.fromRadius(size * 0.125),
+                                  color: isLocked ? AppColor.diableGrey : AppColor.primary,
+                                ),
+                              ),
+
+                              (size * 0.1).toInt().heightGap,
+
+                              Text(
+                                'Pattern\n$number',
+                                textAlign: TextAlign.center,
+                                style: AppTextStyles.bodyTextSmall.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  height: 1.1,
+                                  color: isLocked ? AppColor.diableGrey : AppColor.textBase,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        ),
-      ),
-    );
-    return Expanded(
-      child: SizedBox(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return Card(
-              elevation: isAnswered ? 5 : 0,
-              shadowColor: AppColor.backgroundGrey.withAlpha(25),
-              color: AppColor.backgroundSecondary,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadiusGeometry.circular(12),
-                side: BorderSide(
-                  color: isAnswered ? AppColor.primary : Colors.transparent,
-                  width: 1.5,
-                ),
-              ),
-              child: Padding(
-                padding: EdgeInsetsGeometry.all(constraints.maxHeight * 0.05),
-                child: Column(
-                  children: [
-                    AppSvgWidget(
-                      svgString: card.svgIconString,
-                      size: Size.fromRadius(constraints.maxHeight * 0.125),
-                      color: isAnswered ? AppColor.primary : AppColor.diableGrey,
-                    ),
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: Text(
-                        'Pattern\n$number',
-                        textAlign: TextAlign.center,
-                        style: AppTextStyles.bodyTextSmall.copyWith(
-                          fontWeight: FontWeight.w700,
-                          height: 1.1,
-                          color: isAnswered ? AppColor.textBase : AppColor.diableGrey,
+
+                      // Lock icon (Locked state)
+                      if (isLocked)
+                        Positioned(
+                          top: 8,
+                          right: 8,
+                          child: AppSvgWidget(
+                            svgString: AppSvgs.locked,
+                            size: Size(size * 0.13, size * 0.13),
+                            color: AppColor.diableGrey.withOpacity(0.7),
+                          ),
                         ),
-                      ),
-                    ),
-                  ],
+
+                      // Checkmark (Completed state)
+                      if (isCompleted)
+                        Positioned(
+                          top: 8,
+                          right: 8,
+                          child: AppSvgWidget(
+                            svgString: AppSvgs.answred,
+                            size: Size(size * 0.13, size * 0.13),
+                            color: AppColor.primary.withOpacity(0.7),
+                          ),
+                        ),
+
+                      // Pulse animation overlay (Current)
+                      if (isCurrent)
+                        Positioned.fill(
+                          child: IgnorePointer(
+                            child: AnimatedOpacity(
+                              duration: const Duration(milliseconds: 600),
+                              opacity: 0.15,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 12,
+                                      spreadRadius: 4,
+                                      color: AppColor.primary,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
               ),
             );

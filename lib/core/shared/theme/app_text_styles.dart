@@ -8,7 +8,7 @@ class AppTextStyles {
   static const Color _lightGray = Color(0xFF8E8E8E);
   static const Color _veryLightGray = Color(0xFFB8B8B8);
   static const Color _white = Color(0xFFFFFFFF);
-  static const Color _turquoise = Color(0xFF5ECFCB);
+  // static const Color _turquoise = Color(0xFF5ECFCB);
 
   // 1. Screen Title - Large, bold titles like "Your Love Code"
   static const TextStyle screenTitle = TextStyle(

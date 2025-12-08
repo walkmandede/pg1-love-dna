@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
-import 'package:pg1/core/models/pattern-insight.dart';
+import 'package:pg1/core/models/pattern_insight.dart';
 import '../models/card_model.dart';
 import '../models/choice_model.dart';
 import '../models/trait_vector.dart';

@@ -1,9 +1,14 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pg1/core/routes/app_routes.dart';
 import 'package:pg1/core/shared/constants/app_constants.dart';
-import 'package:pg1/core/shared/extensions/int_extension.dart';
+import 'package:pg1/core/shared/extensions/build_context_extension.dart';
+import 'package:pg1/core/shared/extensions/num_extension.dart';
 import 'package:pg1/core/shared/theme/app_color.dart';
 import 'package:pg1/core/shared/widgets/app_button.dart';
+import 'package:pg1/core/shared/widgets/app_responsive_builder.dart';
 import 'package:pg1/core/shared/widgets/disclosure_message_widget.dart';
 
 class HowWorkPage extends StatefulWidget {
@@ -18,17 +23,26 @@ class _HowWorkPageState extends State<HowWorkPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SizedBox.expand(
-        child: Padding(
-          padding: EdgeInsetsGeometry.all(kBasePaddingM),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _howWorkCard(),
-              32.heightGap,
-              DisclosureMessageWidget(),
-            ],
-          ),
+        child: AppResponsiveBuilder(
+          verticalBuilder: (isVertical) {
+            return Padding(
+              padding: EdgeInsetsGeometry.all(kBasePaddingM),
+              child: Center(
+                child: SizedBox(
+                  width: min(context.screenWidth, kStandardMaxWidthForPortraitOrientation * 0.75),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      _howWorkCard(),
+                      32.heightGap,
+                      DisclosureMessageWidget(),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
         ),
       ),
     );
@@ -41,54 +55,52 @@ class _HowWorkPageState extends State<HowWorkPage> {
       color: AppColor.backgroundSecondary,
       child: Padding(
         padding: EdgeInsetsGeometry.all(kBasePaddingL),
-        child: SizedBox(
-          width: double.infinity,
-          child: Column(
-            children: [
-              Text(
-                'How TWLVE works',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 18,
-                ),
+        child: Column(
+          children: [
+            Text(
+              'How TWLVE works',
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 18,
               ),
-              24.heightGap,
-              Text(
-                'You\'ll respond to 12 everyday\nscenarios.',
-                style: TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontSize: 14,
-                ),
-                textAlign: TextAlign.center,
+            ),
+            24.heightGap,
+            Text(
+              'You\'ll respond to 12 everyday\nscenarios.',
+              style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 14,
               ),
-              16.heightGap,
-              Text(
-                'TWLVE identifies the patterns\nbehind how you respond and how\nyou interpret meaning',
-                style: TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontSize: 14,
-                ),
-                textAlign: TextAlign.center,
+              textAlign: TextAlign.center,
+            ),
+            16.heightGap,
+            Text(
+              'TWLVE identifies the patterns\nbehind how you respond and how\nyou interpret meaning',
+              style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 14,
               ),
-              16.heightGap,
-              Text(
-                'This creates your Love Code.',
-                style: TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontSize: 14,
-                ),
-                textAlign: TextAlign.center,
+              textAlign: TextAlign.center,
+            ),
+            16.heightGap,
+            Text(
+              'This creates your Love Code.',
+              style: TextStyle(
+                fontWeight: FontWeight.normal,
+                fontSize: 14,
               ),
-              24.heightGap,
-              AppButton(
-                onPressed: () {
-                  context.pop();
-                },
-                width: double.infinity,
-                label: 'Continue',
-              ),
-            ],
-          ),
+              textAlign: TextAlign.center,
+            ),
+            24.heightGap,
+            AppButton(
+              onPressed: () {
+                context.pushReplacementNamed(AppRoutes.onboarding.name);
+                context.pushNamed(AppRoutes.inputs.name);
+              },
+              width: double.infinity,
+              label: 'Continue',
+            ),
+          ],
         ),
       ),
     );

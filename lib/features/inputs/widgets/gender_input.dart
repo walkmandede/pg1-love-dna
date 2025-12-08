@@ -1,15 +1,15 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:pg1/core/shared/constants/app_constants.dart';
 import 'package:pg1/core/shared/enums/gender_enum.dart';
-import 'package:pg1/core/shared/extensions/int_extension.dart';
+import 'package:pg1/core/shared/extensions/build_context_extension.dart';
+import 'package:pg1/core/shared/extensions/num_extension.dart';
 import 'package:pg1/core/shared/theme/app_color.dart';
 import 'package:pg1/core/shared/theme/app_text_styles.dart';
 import 'package:pg1/core/shared/widgets/app_button.dart';
-import 'package:pg1/core/shared/widgets/app_text.dart';
 import 'package:pg1/core/shared/widgets/disclosure_message_widget.dart';
 import 'package:pg1/features/inputs/inputs_page_controller.dart';
+import 'package:pg1/features/inputs/widgets/continue_button.dart';
+import 'package:pg1/features/inputs/widgets/progress_bar.dart';
 
 class GenderInput extends StatelessWidget {
   final InputsPageController pageController;
@@ -22,11 +22,13 @@ class GenderInput extends StatelessWidget {
       valueListenable: pageController.selectedGender,
       builder: (context, selectedGender, child) {
         return SingleChildScrollView(
+          padding: EdgeInsets.all(kBasePaddingM),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              32.heightGap,
+              InputPrgoressBar(pageController: pageController),
+              (context.screenHeight * 0.1).heightGap,
               Text(
                 'How do you describle\nyourself?',
                 style: AppTextStyles.inputLabel,
@@ -51,29 +53,13 @@ class GenderInput extends StatelessWidget {
                   ),
                 );
               }),
-              32.heightGap,
-              _continueButton(),
+              (context.screenHeight * 0.1).heightGap,
+              InputContinueButton(controller: pageController),
               16.heightGap,
               DisclosureMessageWidget(),
               32.heightGap,
             ],
           ),
-        );
-      },
-    );
-  }
-
-  Widget _continueButton() {
-    return ValueListenableBuilder(
-      valueListenable: pageController.isValidInput,
-      builder: (context, isValidInput, child) {
-        return AppButton(
-          onPressed: () async {
-            await pageController.onContinuePressed(context);
-          },
-          label: 'Continue',
-          width: double.infinity,
-          isDisabled: !isValidInput,
         );
       },
     );

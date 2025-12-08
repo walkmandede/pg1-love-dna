@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,10 +7,12 @@ import 'package:go_router/go_router.dart';
 import 'package:pg1/core/models/card_model.dart';
 import 'package:pg1/core/routes/app_routes.dart';
 import 'package:pg1/core/shared/constants/app_constants.dart';
-import 'package:pg1/core/shared/extensions/int_extension.dart';
+import 'package:pg1/core/shared/extensions/build_context_extension.dart';
+import 'package:pg1/core/shared/extensions/num_extension.dart';
 import 'package:pg1/core/shared/theme/app_color.dart';
 import 'package:pg1/core/shared/widgets/app_button.dart';
 import 'package:pg1/core/shared/widgets/app_progress_bar.dart';
+import 'package:pg1/core/shared/widgets/app_responsive_builder.dart';
 import 'package:pg1/core/shared/widgets/disclosure_message_widget.dart';
 import 'package:pg1/core/states/session/cubit/session_cubit.dart';
 
@@ -47,46 +51,54 @@ class _PatternCardPageState extends State<PatternCardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox.expand(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: kBasePaddingM,
-            vertical: kBasePaddingM,
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                16.heightGap,
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: InkWell(
-                    onTap: () {
-                      context.pop();
-                    },
-                    child: Icon(
-                      Icons.arrow_back_ios,
-                    ),
+      body: AppResponsiveBuilder(
+        verticalBuilder: (isVertical) {
+          return Center(
+            child: SizedBox(
+              height: double.infinity,
+              width: min(context.screenWidth, kStandardMaxWidthForPortraitOrientation * 0.9),
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: kBasePaddingM,
+                  vertical: kBasePaddingM,
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      16.heightGap,
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: InkWell(
+                          onTap: () {
+                            context.pop();
+                          },
+                          child: Icon(
+                            Icons.arrow_back_ios,
+                          ),
+                        ),
+                      ),
+                      16.heightGap,
+                      AppProgressBar(label: 'Card', current: currentIndex + 1, total: 12),
+                      16.heightGap,
+                      _patternTitle(),
+                      16.heightGap,
+                      _scenarioCard(),
+                      16.heightGap,
+                      _responds(),
+                      16.heightGap,
+                      _reflects(),
+                      16.heightGap,
+                      _continueButton(),
+                      16.heightGap,
+                      DisclosureMessageWidget(),
+                      16.heightGap,
+                    ],
                   ),
                 ),
-                16.heightGap,
-                AppProgressBar(label: 'Card', current: currentIndex + 1, total: 12),
-                16.heightGap,
-                _patternTitle(),
-                16.heightGap,
-                _scenarioCard(),
-                16.heightGap,
-                _responds(),
-                16.heightGap,
-                _reflects(),
-                16.heightGap,
-                _continueButton(),
-                16.heightGap,
-                DisclosureMessageWidget(),
-                16.heightGap,
-              ],
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
@@ -170,12 +182,15 @@ class _PatternCardPageState extends State<PatternCardPage> {
                     setState(() {});
                   },
                   style: FilledButton.styleFrom(
+                    overlayColor: AppColor.primary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadiusGeometry.circular(12),
                       side: BorderSide(
                         color: isSelected ? AppColor.primary : Colors.transparent,
                       ),
                     ),
+                    shadowColor: AppColor.backgroundGrey,
+                    elevation: 0,
                     backgroundColor: AppColor.backgroundSecondary,
                     padding: EdgeInsets.symmetric(
                       horizontal: kBasePaddingM,
@@ -238,12 +253,15 @@ class _PatternCardPageState extends State<PatternCardPage> {
                     setState(() {});
                   },
                   style: FilledButton.styleFrom(
+                    overlayColor: AppColor.primary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadiusGeometry.circular(12),
                       side: BorderSide(
                         color: isSelected ? AppColor.primary : Colors.transparent,
                       ),
                     ),
+                    shadowColor: AppColor.backgroundGrey,
+                    elevation: 0,
                     backgroundColor: AppColor.backgroundSecondary,
                     padding: EdgeInsets.symmetric(
                       horizontal: kBasePaddingM,
@@ -287,8 +305,7 @@ class _PatternCardPageState extends State<PatternCardPage> {
           return;
         }
         final meta = _sessiobCubit.addAnswer(card: _card, behaviour: _selectedBehaviour!, interpretation: _selectedInterpretation!);
-        context.pop();
-        context.pushNamed(AppRoutes.interpretationLen.name, extra: meta);
+        context.pushReplacementNamed(AppRoutes.interpretationLen.name, extra: meta);
       },
       isDisabled: !isValid,
       width: double.infinity,

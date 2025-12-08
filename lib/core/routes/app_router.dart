@@ -4,39 +4,33 @@ import 'package:pg1/core/models/card_model.dart';
 import 'package:pg1/core/routes/app_routes.dart';
 import 'package:pg1/core/shared/type_defs/type_defs.dart';
 import 'package:pg1/core/states/session/cubit/session_cubit.dart';
+import 'package:pg1/features/celebration/celebration_page.dart';
 import 'package:pg1/features/how_work/how_work_page.dart';
 import 'package:pg1/features/inputs/inputs_page.dart';
 import 'package:pg1/features/interpretation_len/interpretation_len_page.dart';
 import 'package:pg1/features/love_library/love_library_page.dart';
-import 'package:pg1/features/onboarding/onboardin_page.dart';
+import 'package:pg1/features/onboarding/onboarding_page.dart';
 import 'package:pg1/features/pattern_card/pattern_card_page.dart';
-import 'package:pg1/features/splash/splash_page.dart';
+import 'package:pg1/features/self_view_len/self_view_len_page.dart';
 import 'package:pg1/features/why_these_moment/why_these_moment_page.dart';
 
 class AppRouter {
   static final router = GoRouter(
-    initialLocation: AppRoutes.splash.path,
+    initialLocation: AppRoutes.onboarding.path,
     redirect: (context, state) {
       if (state.matchedLocation == AppRoutes.results.path) {
         try {
           final bloc = context.read<SessionCubit>();
           if (bloc.state.result == null) {
-            return AppRoutes.splash.path;
+            return AppRoutes.onboarding.path;
           }
         } catch (_) {
-          return AppRoutes.splash.path;
+          return AppRoutes.onboarding.path;
         }
       }
       return null;
     },
     routes: [
-      GoRoute(
-        name: AppRoutes.splash.name,
-        path: AppRoutes.splash.path,
-        builder: (context, state) {
-          return SplashPage();
-        },
-      ),
       GoRoute(
         name: AppRoutes.onboarding.name,
         path: AppRoutes.onboarding.path,
@@ -81,11 +75,30 @@ class AppRouter {
         },
       ),
       GoRoute(
+        name: AppRoutes.celebration.name,
+        path: AppRoutes.celebration.path,
+        builder: (context, state) {
+          return CelebrationPage();
+        },
+      ),
+      GoRoute(
         name: AppRoutes.interpretationLen.name,
         path: AppRoutes.interpretationLen.path,
         builder: (context, state) {
-          final meta = state.extra as InterpretationLenMeta;
+          final meta = state.extra as LenPageMeta;
           return InterpretationLenPage(
+            cardModel: meta.cardModel,
+            cardAnswer: meta.cardAnswer,
+            patternInsight: meta.patternInsight,
+          );
+        },
+      ),
+      GoRoute(
+        name: AppRoutes.selfViewLen.name,
+        path: AppRoutes.selfViewLen.path,
+        builder: (context, state) {
+          final meta = state.extra as LenPageMeta;
+          return SelfViewLenPage(
             cardModel: meta.cardModel,
             cardAnswer: meta.cardAnswer,
             patternInsight: meta.patternInsight,
