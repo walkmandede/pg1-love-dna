@@ -86,7 +86,7 @@ class InputsPageController extends AppPageController {
       }
     } else if (currentPageIndex.value == 2) {
       //address
-      if (selectedGender.value != null) {
+      if (selectedLocation.value != null) {
         isValidInput.value = true;
         return;
       }
