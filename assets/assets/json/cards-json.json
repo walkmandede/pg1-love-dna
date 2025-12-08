@@ -2,7 +2,8 @@
   "cards": [
     {
       "id": "card_01",
-      "patternInsightId": "P1",
+      "behaviourLensPatternId": "P1",
+      "selfViewLensPatternId": "P12",
       "title": "The Slow Reply",
       "scenario": "They take a long time to text back — longer than they usually do. No explanation, no emoji, just… quiet.",
       "behaviours": [
@@ -20,7 +21,8 @@
     },
     {
       "id": "card_02",
-      "patternInsightId": "P2",
+      "behaviourLensPatternId": "P2",
+      "selfViewLensPatternId": "P6",
       "title": "The Blunt Text",
       "scenario": "Their reply comes through short and flat. Not rude, just clipped — like their energy suddenly dropped.",
       "behaviours": [
@@ -38,7 +40,8 @@
     },
     {
       "id": "card_03",
-      "patternInsightId": "P3",
+      "behaviourLensPatternId": "P3",
+      "selfViewLensPatternId": "P8",
       "title": "The Changed Plan",
       "scenario": "Plans you made together suddenly change. They need to move something, cancel something, or shift the timing.",
       "behaviours": [
@@ -56,7 +59,8 @@
     },
     {
       "id": "card_04",
-      "patternInsightId": "P4",
+      "behaviourLensPatternId": "P4",
+      "selfViewLensPatternId": "P7",
       "title": "The Spontaneous Invite",
       "scenario": "They message you with a last-minute idea: \"Want to do something tonight?\"",
       "behaviours": [
@@ -74,7 +78,8 @@
     },
     {
       "id": "card_05",
-      "patternInsightId": "P5",
+      "behaviourLensPatternId": "P5",
+      "selfViewLensPatternId": "P2",
       "title": "The Compliment",
       "scenario": "They compliment you — directly and without irony. It's warm, it's real, and it lands right on you.",
       "behaviours": [
@@ -92,7 +97,8 @@
     },
     {
       "id": "card_06",
-      "patternInsightId": "P6",
+      "behaviourLensPatternId": "P12",
+      "selfViewLensPatternId": "P10",
       "title": "The Mixed Signals",
       "scenario": "Their tone shifts during the conversation. Warm earlier, cooler now.",
       "behaviours": [
@@ -110,7 +116,8 @@
     },
     {
       "id": "card_07",
-      "patternInsightId": "P7",
+      "behaviourLensPatternId": "P11",
+      "selfViewLensPatternId": "P9",
       "title": "The Low-Energy Day",
       "scenario": "They're slower and less responsive today.",
       "behaviours": [
@@ -128,8 +135,9 @@
     },
     {
       "id": "card_08",
-      "patternInsightId": "P8",
-      "title": "The Hot–Cold Wave",
+      "behaviourLensPatternId": "P8",
+      "selfViewLensPatternId": "P7",
+      "title": "The Hot-Cold Wave",
       "scenario": "They're warm one day, distant the next. Consistency slips.",
       "behaviours": [
         { "id": "A", "label": "I keep my own rhythm." },
@@ -146,7 +154,8 @@
     },
     {
       "id": "card_09",
-      "patternInsightId": "P9",
+      "behaviourLensPatternId": "P5",
+      "selfViewLensPatternId": "P4",
       "title": "The Vulnerable Share",
       "scenario": "They open up about something real.",
       "behaviours": [
@@ -164,7 +173,8 @@
     },
     {
       "id": "card_10",
-      "patternInsightId": "P10",
+      "behaviourLensPatternId": "P6",
+      "selfViewLensPatternId": "P9",
       "title": "The Space Moment",
       "scenario": "They say they need some space.",
       "behaviours": [
@@ -182,7 +192,8 @@
     },
     {
       "id": "card_11",
-      "patternInsightId": "P11",
+      "behaviourLensPatternId": "P11",
+      "selfViewLensPatternId": "P3",
       "title": "The Silence Patch",
       "scenario": "The conversation slows.",
       "behaviours": [
@@ -200,7 +211,8 @@
     },
     {
       "id": "card_12",
-      "patternInsightId": "P12",
+      "behaviourLensPatternId": "P1",
+      "selfViewLensPatternId": "P12",
       "title": "The Steady Energy",
       "scenario": "They're consistent, engaged, and warm.",
       "behaviours": [
