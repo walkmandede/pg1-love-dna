@@ -10,11 +10,11 @@ class InputsPageController extends AppPageController {
   PageController pageController = PageController();
   ValueNotifier<int> currentPageIndex = ValueNotifier(0);
 
-  TextEditingController nameField = TextEditingController(text: kDebugMode ? 'Test Name' : '');
-  TextEditingController ageField = TextEditingController(text: kDebugMode ? '27' : '');
-  ValueNotifier<GenderEnum?> selectedGender = ValueNotifier(kDebugMode ? GenderEnum.male : null);
-  ValueNotifier<AppLocationEnum?> selectedLocation = ValueNotifier(kDebugMode ? AppLocationEnum.outsideUK : null);
-  ValueNotifier<bool> isValidInput = ValueNotifier(kDebugMode ? true : false);
+  TextEditingController nameField = TextEditingController(text: '');
+  TextEditingController ageField = TextEditingController(text: '');
+  ValueNotifier<GenderEnum?> selectedGender = ValueNotifier(null);
+  ValueNotifier<AppLocationEnum?> selectedLocation = ValueNotifier(null);
+  ValueNotifier<bool> isValidInput = ValueNotifier(false);
   ValueNotifier<String?> errorText = ValueNotifier(null);
 
   @override
