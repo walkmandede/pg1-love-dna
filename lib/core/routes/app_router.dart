@@ -7,11 +7,11 @@ import 'package:pg1/core/states/session/cubit/session_cubit.dart';
 import 'package:pg1/features/celebration/celebration_page.dart';
 import 'package:pg1/features/how_work/how_work_page.dart';
 import 'package:pg1/features/inputs/inputs_page.dart';
-import 'package:pg1/features/interpretation_len/interpretation_len_page.dart';
+import 'package:pg1/features/lens/interpretation_len/interpretation_len_page.dart';
 import 'package:pg1/features/love_library/love_library_page.dart';
 import 'package:pg1/features/onboarding/onboarding_page.dart';
 import 'package:pg1/features/pattern_card/pattern_card_page.dart';
-import 'package:pg1/features/self_view_len/self_view_len_page.dart';
+import 'package:pg1/features/lens/self_view_len/self_view_len_page.dart';
 import 'package:pg1/features/why_these_moment/why_these_moment_page.dart';
 
 class AppRouter {

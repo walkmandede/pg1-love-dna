@@ -60,7 +60,7 @@ class SessionCubit extends Cubit<SessionState> {
     }
   }
 
-  PatternInsight? getPatternInsight(String patternId) {
+  PatternInsight? getPatternInsightForScoring(String patternId) {
     return _patternInsights?[patternId];
   }
 
@@ -71,12 +71,12 @@ class SessionCubit extends Cubit<SessionState> {
       state.answers.add(cardAnswer);
       emit(state);
 
-      final patternInsight = getPatternInsight(card.behaviourLensPatternId);
+      final patternInsight = getPatternInsightForScoring(card.behaviourLensPatternId);
       if (patternInsight == null) {
         return null;
       }
 
-      return (cardModel: card, cardAnswer: cardAnswer, patternInsight: getPatternInsight(card.behaviourLensPatternId)!);
+      return (cardModel: card, cardAnswer: cardAnswer, patternInsight: getPatternInsightForScoring(card.behaviourLensPatternId)!);
     }
     return null;
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pg1/core/shared/constants/app_constants.dart';
 import 'package:pg1/core/shared/theme/app_color.dart';
 import 'package:pg1/core/shared/theme/app_text_styles.dart';
 
@@ -29,11 +30,14 @@ class AppProgressBar extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           height: 10,
-          child: Stack(
-            children: [
-              _bar(1, AppColor.backgroundGrey),
-              _bar(current / total, AppColor.primary),
-            ],
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: kBasePaddingM),
+            child: Stack(
+              children: [
+                _bar(1, AppColor.backgroundGrey),
+                _bar(current / total, AppColor.primary),
+              ],
+            ),
           ),
         ),
       ],

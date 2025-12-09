@@ -1,9 +1,3 @@
-# pg1
-
-A new Flutter project.
-
-
-
 ## first deploy
 # Build the web app
 flutter build web --release --base-href "/pg1-love-dna/"
@@ -18,6 +12,8 @@ git push origin gh-pages --force
 git checkout main
 
 
+
+
 ## further deploy
 
 # Make sure you're on the main branch
@@ -25,6 +21,8 @@ git checkout main
 
 # Build the web app
 flutter build web --release --base-href "/pg1-love-dna/" --wasm
+or
+flutter build web --release --web-renderer=canvaskit --base-href "/pg1-love-dna/" --wasm
 
 # Switch to gh-pages branch
 git checkout gh-pages

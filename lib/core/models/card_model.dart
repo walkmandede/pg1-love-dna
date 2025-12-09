@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 
 class Behaviour extends Equatable {
@@ -30,6 +32,7 @@ class Interpretation extends Equatable {
 
 class CardModel extends Equatable {
   final String id;
+  final String contentRoutePatternId;
   final String behaviourLensPatternId;
   final String selfViewLensPatternId;
   final String title;
@@ -39,6 +42,7 @@ class CardModel extends Equatable {
 
   const CardModel({
     required this.id,
+    required this.contentRoutePatternId,
     required this.behaviourLensPatternId,
     required this.selfViewLensPatternId,
     required this.title,
@@ -49,16 +53,18 @@ class CardModel extends Equatable {
 
   factory CardModel.fromJson(Map<String, dynamic> json) {
     return CardModel(
-      id: json['id'] as String,
-      behaviourLensPatternId: json['behaviourLensPatternId'] as String,
-      selfViewLensPatternId: json['selfViewLensPatternId'] as String,
-      title: json['title'] as String,
-      scenario: json['scenario'] as String,
+      id: json['id'].toString(),
+      contentRoutePatternId: json['contentRoutePatternId'].toString(),
+      behaviourLensPatternId: json['behaviourLensPatternId'].toString(),
+      selfViewLensPatternId: json['selfViewLensPatternId'].toString(),
+      title: json['title'].toString(),
+      scenario: json['scenario'].toString(),
       behaviours: (json['behaviours'] as List).map((b) => Behaviour.fromJson(b)).toList(),
       interpretations: (json['interpretations'] as List).map((i) => Interpretation.fromJson(i)).toList(),
     );
   }
 
+  String get contentRoutePatternLabel => 'Pattern ${contentRoutePatternId.replaceAll('P', '')}';
   String get behaviourLensPatternLabel => 'Pattern ${behaviourLensPatternId.replaceAll('P', '')}';
   String get selfViewLensPatternLabel => 'Pattern ${selfViewLensPatternId.replaceAll('P', '')}';
 

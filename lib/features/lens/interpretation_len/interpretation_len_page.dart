@@ -1,10 +1,12 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pg1/core/models/card_model.dart';
 import 'package:pg1/core/models/choice_model.dart';
 import 'package:pg1/core/models/pattern_insight.dart';
-import 'package:pg1/core/shared/assets/app_svgs.dart';
+import 'package:pg1/core/routes/app_routes.dart';
 import 'package:pg1/core/shared/constants/app_constants.dart';
 import 'package:pg1/core/shared/extensions/build_context_extension.dart';
 import 'package:pg1/core/shared/extensions/card_model_extension.dart';
@@ -15,13 +17,14 @@ import 'package:pg1/core/shared/widgets/app_button.dart';
 import 'package:pg1/core/shared/widgets/app_responsive_builder.dart';
 import 'package:pg1/core/shared/widgets/app_svg_widget.dart';
 import 'package:pg1/core/shared/widgets/disclosure_message_widget.dart';
+import 'package:pg1/core/states/session/cubit/session_cubit.dart';
 
-class SelfViewLenPage extends StatefulWidget {
+class InterpretationLenPage extends StatefulWidget {
   final CardModel cardModel;
   final CardAnswer cardAnswer;
   final PatternInsight patternInsight;
 
-  const SelfViewLenPage({
+  const InterpretationLenPage({
     super.key,
     required this.cardModel,
     required this.cardAnswer,
@@ -29,13 +32,23 @@ class SelfViewLenPage extends StatefulWidget {
   });
 
   @override
-  State<SelfViewLenPage> createState() => _SelfViewLenPageState();
+  State<InterpretationLenPage> createState() => _InterpretationLenPageState();
 }
 
-class _SelfViewLenPageState extends State<SelfViewLenPage> {
+class _InterpretationLenPageState extends State<InterpretationLenPage> {
   CardModel get _cardModel => widget.cardModel;
   CardAnswer get _cardAnswer => widget.cardAnswer;
   PatternInsight get _patternInsight => widget.patternInsight;
+
+  void _onClickContinue() async {
+    final sessionCubit = context.read<SessionCubit>();
+    final index = sessionCubit.getIndexOfTheCard(_cardModel);
+    if (index == 11) {
+      context.pushReplacementNamed(AppRoutes.celebration.name);
+    } else {
+      context.pop();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,19 +66,15 @@ class _SelfViewLenPageState extends State<SelfViewLenPage> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      Align(
-                        alignment: AlignmentGeometry.centerLeft,
-                        child: BackButton(),
-                      ),
                       (context.screenHeight * 0.05).heightGap,
                       AppSvgWidget(
-                        svgString: AppSvgs.pattern,
+                        svgString: _cardModel.svgIconString,
                         color: AppColor.white,
                         hasBgCircle: true,
                       ),
                       16.heightGap,
                       Text(
-                        '${_cardModel.selfViewLensPatternLabel} Identified',
+                        '${_cardModel.contentRoutePatternId} Identified',
                         style: AppTextStyles.cardTitle,
                         textAlign: TextAlign.center,
                       ),
@@ -94,7 +103,7 @@ class _SelfViewLenPageState extends State<SelfViewLenPage> {
                       (context.screenHeight * 0.05).heightGap,
                       AppButton(
                         onPressed: () {
-                          context.pop();
+                          _onClickContinue();
                         },
                         label: 'Continue',
                       ),

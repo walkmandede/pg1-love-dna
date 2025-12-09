@@ -6,6 +6,7 @@ import 'package:pg1/features/inputs/widgets/address_input.dart';
 import 'package:pg1/features/inputs/widgets/age_input.dart';
 import 'package:pg1/features/inputs/widgets/gender_input.dart';
 import 'package:pg1/features/inputs/widgets/name_input.dart';
+import 'package:pg1/features/inputs/widgets/sub_widgets/progress_bar.dart';
 
 class InputsPage extends StatefulWidget {
   const InputsPage({super.key});
@@ -65,6 +66,7 @@ class _InputsPageState extends State<InputsPage> {
             ),
           ),
         ),
+        InputPrgoressBar(pageController: _controller),
         Expanded(
           child: PageView.builder(
             physics: const NeverScrollableScrollPhysics(),

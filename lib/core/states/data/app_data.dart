@@ -1,3 +1,3 @@
 class AppData {
-  static const String version = '1.0.6 - Development';
+  static const String version = '1.0.7 - Development';
 }

@@ -7,8 +7,9 @@ import 'package:pg1/core/shared/theme/app_text_styles.dart';
 import 'package:pg1/core/shared/widgets/app_text_field.dart';
 import 'package:pg1/core/shared/widgets/disclosure_message_widget.dart';
 import 'package:pg1/features/inputs/inputs_page_controller.dart';
-import 'package:pg1/features/inputs/widgets/continue_button.dart';
-import 'package:pg1/features/inputs/widgets/progress_bar.dart';
+import 'package:pg1/features/inputs/widgets/sub_widgets/continue_button.dart';
+import 'package:pg1/features/inputs/widgets/sub_widgets/errot_text.dart';
+import 'package:pg1/features/inputs/widgets/sub_widgets/progress_bar.dart';
 
 class NameInput extends StatelessWidget {
   final InputsPageController pageController;
@@ -17,26 +18,29 @@ class NameInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return Padding(
       padding: EdgeInsets.all(kBasePaddingM),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          InputPrgoressBar(pageController: pageController),
-          (context.screenHeight * 0.225).heightGap,
+          const Spacer(),
           Text(
             'What\'s your name?',
             style: AppTextStyles.inputLabel,
             textAlign: TextAlign.center,
           ),
-
           32.heightGap,
-          AppTextField(
-            hintText: 'Enter your name',
-            controller: pageController.nameField,
+          ValueListenableBuilder(
+            valueListenable: pageController.errorText,
+            builder: (context, errorText, child) {
+              return AppTextField(
+                hintText: 'Enter your name',
+                controller: pageController.nameField,
+                errorText: errorText,
+              );
+            },
           ),
-
           16.heightGap,
           Text(
             'Your name isn\'t stored with your answers',
@@ -47,31 +51,13 @@ class NameInput extends StatelessWidget {
               color: AppColor.textSecondary,
             ),
           ),
-          (context.screenHeight * 0.225).heightGap,
-          ValueListenableBuilder(
-            valueListenable: pageController.errorText,
-            builder: (context, errorText, child) {
-              if (errorText == null) {
-                return SizedBox.shrink();
-              } else {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: kBasePaddingM),
-                  child: Center(
-                    child: Text(
-                      errorText,
-                      style: AppTextStyles.bodyText.copyWith(
-                        color: AppColor.error600,
-                      ),
-                    ),
-                  ),
-                );
-              }
-            },
-          ),
+          8.heightGap,
+          const Spacer(),
+          InputErrorText(pageController: pageController),
           InputContinueButton(controller: pageController),
           16.heightGap,
           DisclosureMessageWidget(),
-          32.heightGap,
+          8.heightGap,
         ],
       ),
     );

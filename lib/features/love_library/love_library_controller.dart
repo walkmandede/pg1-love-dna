@@ -32,7 +32,7 @@ class LoveLibraryController extends AppPageController {
 
   void onEachCardPressed(BuildContext context, CardModel card, int index) async {
     final cardAnswer = sessionCubit.state.answers.where((a) => a.cardId == card.id).firstOrNull;
-    final selfViewPattern = sessionCubit.getPatternInsight(card.selfViewLensPatternId);
+    final selfViewPattern = sessionCubit.getPatternInsightForScoring(card.contentRoutePatternId);
     if (cardAnswer != null && selfViewPattern != null) {
       final LenPageMeta lenPageMeta = (cardModel: card, cardAnswer: cardAnswer, patternInsight: selfViewPattern);
       context.pushNamed(AppRoutes.selfViewLen.name, extra: lenPageMeta);

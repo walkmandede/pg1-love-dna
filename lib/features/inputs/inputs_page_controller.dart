@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pg1/core/routes/app_routes.dart';
@@ -48,12 +47,12 @@ class InputsPageController extends AppPageController {
       //name
       final isValidName = _isValidName(nameField.text);
       if (isValidName) {
-        errorText.value = '';
+        errorText.value = null;
         isValidInput.value = true;
         return;
       } else {
         if (nameField.text.isEmpty) {
-          errorText.value = '';
+          errorText.value = null;
         } else {
           errorText.value = 'Invalid Username';
         }
@@ -65,7 +64,7 @@ class InputsPageController extends AppPageController {
       final isValidAge = _isValidAge(ageField.text);
       if (!isValidAge) {
         if (ageField.text.isEmpty) {
-          errorText.value = '';
+          errorText.value = null;
         } else {
           errorText.value = 'Invalid Age Format';
         }
@@ -73,13 +72,13 @@ class InputsPageController extends AppPageController {
       } else {
         if (_isUnderage(ageField.text)) {
           if (ageField.text.isEmpty) {
-            errorText.value = '';
+            errorText.value = null;
           } else {
             errorText.value = 'You must be at least 18 years old.';
           }
           return;
         } else {
-          errorText.value = '';
+          errorText.value = null;
           isValidInput.value = true;
           return;
         }

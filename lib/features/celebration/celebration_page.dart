@@ -82,7 +82,7 @@ class _CelebrationPageState extends State<CelebrationPage> with SingleTickerProv
                         maxBlastForce: 18,
                         minBlastForce: 4,
                         emissionFrequency: 0.005,
-                        numberOfParticles: 120,
+                        numberOfParticles: 60,
                         gravity: 0.05,
                         colors: const [
                           AppColor.primary,

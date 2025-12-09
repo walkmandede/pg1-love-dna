@@ -130,7 +130,7 @@ class _AppButtonState extends State<AppButton> {
 
   double get _scale {
     if (_disabled) return 1.0;
-    if (_isPressed) return 0.98;
+    if (_isPressed) return 0.95;
     if (_isHovered) return 0.975;
     return 1.0;
   }

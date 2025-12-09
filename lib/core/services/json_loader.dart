@@ -10,7 +10,8 @@ class JsonLoader {
     final String jsonString = await rootBundle.loadString('assets/json/cards-json.json');
     final Map<String, dynamic> data = json.decode(jsonString);
     final List<dynamic> cardsJson = data['cards'];
-    return cardsJson.map((c) => CardModel.fromJson(c)).toList();
+    final cards = cardsJson.map((c) => CardModel.fromJson(c)).toList();
+    return cards;
   }
 
   static Future<Map<String, Map<String, BehaviourMapping>>> loadBehaviourMappings() async {

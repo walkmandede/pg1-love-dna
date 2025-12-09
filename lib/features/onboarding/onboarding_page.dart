@@ -55,94 +55,104 @@ class _OnboardingPageState extends State<OnboardingPage> {
   }
 
   Widget _vLayout(bool isVertical) {
-    return SingleChildScrollView(
+    return Padding(
       padding: EdgeInsetsGeometry.all(kBasePaddingM),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Align(
-            alignment: Alignment.centerRight,
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                // horizontal: kBasePaddingS,
-                // vertical: kBasePaddingS,
-              ),
-              child: Text(
-                AppData.version,
-                style: AppTextStyles.bodyTextSmall.copyWith(
-                  fontSize: 10,
-                  fontWeight: FontWeight.bold,
-                  color: AppColor.textSecondary,
-                ),
-              ),
-            ),
-          ),
-          (context.screenHeight * 0.125).heightGap,
-          Hero(
-            tag: 'heart_icon',
-            child: AppSvgWidget(
-              svgString: AppSvgs.heart,
-              color: AppColor.textOnButton,
-              size: Size.fromRadius(35),
-              hasBgCircle: true,
-            ),
-          ),
-          16.heightGap,
-          Text(
-            'Find your Love Code\nin 3 minutes.',
-            textAlign: TextAlign.center,
-            style: AppTextStyles.cardTitle,
-          ),
-          8.heightGap,
-          Text(
-            'Quick, private, and grounded in emotional\npatterns',
-            textAlign: TextAlign.center,
-            style: AppTextStyles.subtitle,
-          ),
-          (context.screenHeight * 0.05).heightGap,
-          Row(
-            spacing: 16,
+      child: LayoutBuilder(
+        builder: (a1, c1) {
+          return Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                width: min(112, context.screenWidth * 0.25),
-                child: WhiteCard(title: 'Respond', iconPath: AppSvgs.respond),
-              ),
-              SizedBox(
-                width: min(112, context.screenWidth * 0.25),
-                child: WhiteCard(title: 'Pattern', iconPath: AppSvgs.pattern),
-              ),
-              SizedBox(
-                width: min(112, context.screenWidth * 0.25),
-                child: WhiteCard(title: 'Code', iconPath: AppSvgs.code),
+              FittedBox(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(),
+                          child: Text(
+                            AppData.version,
+                            style: AppTextStyles.bodyTextSmall.copyWith(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: AppColor.textSecondary,
+                            ),
+                          ),
+                        ),
+                      ),
+                      (context.screenHeight * 0.125).heightGap,
+                      Hero(
+                        tag: 'heart_icon',
+                        child: AppSvgWidget(
+                          svgString: AppSvgs.heart,
+                          color: AppColor.textOnButton,
+                          size: Size.fromRadius(35),
+                          hasBgCircle: true,
+                        ),
+                      ),
+                      16.heightGap,
+                      Text(
+                        'Find your Love Code\nin 3 minutes.',
+                        textAlign: TextAlign.center,
+                        style: AppTextStyles.cardTitle,
+                      ),
+                      8.heightGap,
+                      Text(
+                        'Quick, private, and grounded in emotional\npatterns',
+                        textAlign: TextAlign.center,
+                        style: AppTextStyles.subtitle,
+                      ),
+                      (context.screenHeight * 0.05).heightGap,
+                      Row(
+                        spacing: 16,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: min(112, context.screenWidth * 0.25),
+                            child: WhiteCard(title: 'Respond', iconPath: AppSvgs.respond),
+                          ),
+                          SizedBox(
+                            width: min(112, context.screenWidth * 0.25),
+                            child: WhiteCard(title: 'Pattern', iconPath: AppSvgs.pattern),
+                          ),
+                          SizedBox(
+                            width: min(112, context.screenWidth * 0.25),
+                            child: WhiteCard(title: 'Code', iconPath: AppSvgs.code),
+                          ),
+                        ],
+                      ),
+                      (context.screenHeight * 0.05).heightGap,
+                      AppButton(
+                        width: min(kStandardMaxWidthForPortraitOrientation, c1.maxWidth * 0.8),
+                        onPressed: () {
+                          context.pushNamed(AppRoutes.inputs.name);
+                        },
+                        label: 'Begin',
+                      ),
+                      16.heightGap,
+                      TextButton(
+                        onPressed: () {
+                          context.pushNamed(AppRoutes.howWork.name);
+                        },
+                        child: Text(
+                          'How TWLVE work',
+                          style: AppTextStyles.linkText.copyWith(
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                      (context.screenHeight * 0.125).heightGap,
+                      DisclosureMessageWidget(),
+                      8.heightGap,
+                    ],
+                  ),
+                ),
               ),
             ],
-          ),
-          (context.screenHeight * 0.05).heightGap,
-          AppButton(
-            width: kStandardMaxWidthForPortraitOrientation,
-            onPressed: () {
-              context.pushNamed(AppRoutes.inputs.name);
-            },
-            label: 'Begin',
-          ),
-          16.heightGap,
-          TextButton(
-            onPressed: () {
-              context.pushNamed(AppRoutes.howWork.name);
-            },
-            child: Text(
-              'How TWLVE work',
-              style: AppTextStyles.linkText.copyWith(
-                decoration: TextDecoration.underline,
-              ),
-            ),
-          ),
-          (context.screenHeight * 0.125).heightGap,
-          DisclosureMessageWidget(),
-          8.heightGap,
-        ],
+          );
+        },
       ),
     );
   }
