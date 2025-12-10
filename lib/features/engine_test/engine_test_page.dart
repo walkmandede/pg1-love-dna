@@ -4,9 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pg1/core/models/card_answer_model.dart';
-import 'package:pg1/core/models/twlve_models.dart';
 import 'package:pg1/core/services/engine_service.dart';
 import 'package:pg1/core/shared/extensions/num_extension.dart';
+import 'package:pg1/core/shared/theme/app_color.dart';
 import 'package:pg1/core/states/session/cubit/session_cubit.dart';
 
 class EngineTestPage extends StatefulWidget {
@@ -35,37 +35,10 @@ class _EngineTestPageState extends State<EngineTestPage> {
     CardAnswerModel(cardId: 'card_12', behaviourId: 'A', interpretationId: '1'),
   ]);
 
-  final Map<String, TextEditingController> _behaviourFields = {
-    'card_01': TextEditingController(text: 'A'),
-    'card_02': TextEditingController(text: 'A'),
-    'card_03': TextEditingController(text: 'A'),
-    'card_04': TextEditingController(text: 'A'),
-    'card_05': TextEditingController(text: 'A'),
-    'card_06': TextEditingController(text: 'A'),
-    'card_07': TextEditingController(text: 'A'),
-    'card_08': TextEditingController(text: 'A'),
-    'card_09': TextEditingController(text: 'A'),
-    'card_10': TextEditingController(text: 'A'),
-    'card_11': TextEditingController(text: 'A'),
-    'card_12': TextEditingController(text: 'A'),
-  };
-
-  final Map<String, TextEditingController> _interpretationFields = {
-    'card_01': TextEditingController(text: '1'),
-    'card_02': TextEditingController(text: '1'),
-    'card_03': TextEditingController(text: '1'),
-    'card_04': TextEditingController(text: '1'),
-    'card_05': TextEditingController(text: '1'),
-    'card_06': TextEditingController(text: '1'),
-    'card_07': TextEditingController(text: '1'),
-    'card_08': TextEditingController(text: '1'),
-    'card_09': TextEditingController(text: '1'),
-    'card_10': TextEditingController(text: '1'),
-    'card_11': TextEditingController(text: '1'),
-    'card_12': TextEditingController(text: '1'),
-  };
-
   final ValueNotifier<EngineResult?> _result = ValueNotifier(null);
+
+  final ValueNotifier<String> _setAllBValue = ValueNotifier('A');
+  final ValueNotifier<String> _setAllIValue = ValueNotifier('1');
 
   @override
   void initState() {
@@ -88,12 +61,10 @@ class _EngineTestPageState extends State<EngineTestPage> {
 
   Future<void> _computeResults() async {
     _result.value = null;
-    print(_customCardAnswers.value.map((cca) => cca.toJson()).join('\n'));
     final cardAnswers = [..._customCardAnswers.value];
 
     final result = await _sessionCubit.computeResult(cardAnswers);
     _result.value = result;
-    print(_prettifyJson(result.loveCodeResult.toJson()));
   }
 
   Future<void> _randomizeAnswers() async {
@@ -103,8 +74,9 @@ class _EngineTestPageState extends State<EngineTestPage> {
 
       final bAnswer = ['A', 'B', 'C', 'D'][bIdIndex];
       final iAnswer = ['1', '2', '3', '4'][iIdIndex];
-      _behaviourFields[answer.cardId]?.text = bAnswer;
-      _interpretationFields[answer.cardId]?.text = iAnswer;
+      // answer.behaviourId = bAnswer;
+      // answer.interpretationId = iAnswer;
+      // newAnswers.add(answer);
       _bFieldOnChanged(answer, bAnswer);
       _iFieldOnChanged(answer, iAnswer);
     }
@@ -142,6 +114,18 @@ class _EngineTestPageState extends State<EngineTestPage> {
     _customCardAnswers.value = [...tempList];
   }
 
+  void _setAllBehaviourValue(String id) {
+    for (final answer in _customCardAnswers.value) {
+      _bFieldOnChanged(answer, id);
+    }
+  }
+
+  void _setAllInterpretationValue(String id) {
+    for (final answer in _customCardAnswers.value) {
+      _iFieldOnChanged(answer, id);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -159,6 +143,8 @@ class _EngineTestPageState extends State<EngineTestPage> {
                   padding: const EdgeInsets.all(16),
 
                   children: [
+                    _actions(),
+                    16.heightGap,
                     ...answers.map(_answerWidget),
                     16.heightGap,
                     Row(
@@ -174,7 +160,7 @@ class _EngineTestPageState extends State<EngineTestPage> {
                           onPressed: () {
                             _computeResults();
                           },
-                          child: Text('See Result'),
+                          child: Text('Generate Result'),
                         ),
                       ],
                     ),
@@ -202,9 +188,60 @@ class _EngineTestPageState extends State<EngineTestPage> {
     );
   }
 
+  Widget _actions() {
+    return Card(
+      elevation: 0,
+      margin: EdgeInsets.zero,
+      color: AppColor.primary.withAlpha(100),
+      child: Row(
+        spacing: 8,
+        children: [
+          Expanded(child: const Text('Set all')),
+          Expanded(
+            child: ValueListenableBuilder(
+              valueListenable: _setAllBValue,
+              builder: (context, setAllBValue, child) {
+                return DropdownButton<String>(
+                  value: setAllBValue,
+                  isExpanded: true,
+                  items: ['A', 'B', 'C', 'D'].map((i) => DropdownMenuItem(value: i, child: Text(i.toString()))).toList(),
+                  onChanged: (value) {
+                    if (value == null) {
+                      return;
+                    }
+                    _setAllBValue.value = value;
+                    _setAllBehaviourValue(value);
+                  },
+                );
+              },
+            ),
+          ),
+          Expanded(
+            child: ValueListenableBuilder(
+              valueListenable: _setAllIValue,
+              builder: (context, setAllIValue, child) {
+                return DropdownButton<String>(
+                  value: setAllIValue,
+                  isExpanded: true,
+
+                  items: ['1', '2', '3', '4'].map((i) => DropdownMenuItem(value: i, child: Text(i.toString()))).toList(),
+                  onChanged: (value) {
+                    if (value == null) {
+                      return;
+                    }
+                    _setAllIValue.value = value;
+                    _setAllInterpretationValue(value);
+                  },
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _answerWidget(CardAnswerModel answer) {
-    final behaviourField = _behaviourFields[answer.cardId];
-    final interpretationField = _interpretationFields[answer.cardId];
     return Row(
       spacing: 8,
       children: [
@@ -212,19 +249,28 @@ class _EngineTestPageState extends State<EngineTestPage> {
           child: Text(answer.cardId),
         ),
         Expanded(
-          child: TextField(
-            decoration: InputDecoration(labelText: 'Behaviour'),
-            controller: behaviourField,
+          child: DropdownButton<String>(
+            value: answer.behaviourId,
+            isExpanded: true,
+            items: ['A', 'B', 'C', 'D'].map((i) => DropdownMenuItem(value: i, child: Text(i.toString()))).toList(),
             onChanged: (value) {
+              if (value == null) {
+                return;
+              }
               _bFieldOnChanged(answer, value);
             },
           ),
         ),
         Expanded(
-          child: TextField(
-            decoration: InputDecoration(labelText: 'Interpretation'),
-            controller: interpretationField,
+          child: DropdownButton<String>(
+            value: answer.interpretationId,
+            isExpanded: true,
+
+            items: ['1', '2', '3', '4'].map((i) => DropdownMenuItem(value: i, child: Text(i.toString()))).toList(),
             onChanged: (value) {
+              if (value == null) {
+                return;
+              }
               _iFieldOnChanged(answer, value);
             },
           ),
