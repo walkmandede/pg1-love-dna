@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pg1/core/models/card_answer_model.dart';
 import 'package:pg1/core/services/engine_service.dart';
+import 'package:pg1/core/shared/constants/app_constants.dart';
 import 'package:pg1/core/shared/extensions/num_extension.dart';
 import 'package:pg1/core/shared/logger/app_logger.dart';
 import 'package:pg1/core/shared/theme/app_color.dart';
@@ -200,7 +201,7 @@ class _EngineTestPageState extends State<EngineTestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Engine Test - 1.0.2')),
+      appBar: AppBar(title: const Text('Engine Test - 1.0.3')),
       body: ValueListenableBuilder(
         valueListenable: _isLoaded,
         builder: (context, loaded, child) {
@@ -214,49 +215,6 @@ class _EngineTestPageState extends State<EngineTestPage> {
                   padding: const EdgeInsets.all(16),
 
                   children: [
-                    if (kDebugMode)
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            ...[10, 50, 100, 1000, 5000].map((c) {
-                              return TextButton(
-                                onPressed: () async {
-                                  final result = await runRandomDistributionTest(c);
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return Center(
-                                        child: SingleChildScrollView(
-                                          child: Card(
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  SelectableText(result),
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      context.pop();
-                                                    },
-                                                    child: Text('Close'),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
-                                child: Text('Random Distribution (x$c)'),
-                              );
-                            }).toList(),
-                          ],
-                        ),
-                      ),
                     _actions(),
                     16.heightGap,
                     ...answers.map(_answerWidget),
@@ -278,6 +236,7 @@ class _EngineTestPageState extends State<EngineTestPage> {
                         ),
                       ],
                     ),
+                    _distributionsTest(),
                     16.heightGap,
                     ExpansionTile(
                       title: Text('Types'),
@@ -299,6 +258,48 @@ class _EngineTestPageState extends State<EngineTestPage> {
           );
         },
       ),
+    );
+  }
+
+  Widget _distributionsTest() {
+    return Wrap(
+      children: [
+        ...[10, 50, 100, 1000, 5000].map((c) {
+          return TextButton(
+            onPressed: () async {
+              final result = await runRandomDistributionTest(c);
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return Center(
+                    child: SingleChildScrollView(
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SelectableText(result),
+                              TextButton(
+                                onPressed: () {
+                                  context.pop();
+                                },
+                                child: Text('Close'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+            child: Text('Random Distribution (x$c)'),
+          );
+        }).toList(),
+      ],
     );
   }
 
