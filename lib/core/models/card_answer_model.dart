@@ -30,6 +30,8 @@ class CardAnswerModel extends Equatable {
     };
   }
 
+  int get cardNumber => int.parse(cardId.replaceAll('card_', ''));
+
   @override
   List<Object?> get props => [cardId, behaviourId, interpretationId];
 }

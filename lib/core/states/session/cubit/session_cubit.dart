@@ -2,7 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pg1/core/models/card_model.dart';
 import 'package:pg1/core/models/card_answer_model.dart';
 import 'package:pg1/core/models/pattern_insight.dart';
-import 'package:pg1/core/models/twlve_models.dart';
 import 'package:pg1/core/services/data_loader_service.dart';
 import 'package:pg1/core/services/engine_service.dart';
 import 'package:pg1/core/services/json_loader.dart';

@@ -1,11 +1,14 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pg1/core/models/card_answer_model.dart';
 import 'package:pg1/core/services/engine_service.dart';
 import 'package:pg1/core/shared/extensions/num_extension.dart';
+import 'package:pg1/core/shared/logger/app_logger.dart';
 import 'package:pg1/core/shared/theme/app_color.dart';
 import 'package:pg1/core/states/session/cubit/session_cubit.dart';
 
@@ -126,10 +129,78 @@ class _EngineTestPageState extends State<EngineTestPage> {
     }
   }
 
+  Future<String> runRandomDistributionTest(int testCount) async {
+    String result = '';
+    final random = Random(); // Fixed seed = reproducible results
+    // final random = Random(42); // Fixed seed = reproducible results
+    final Map<String, int> typeCounter = {};
+
+    const behaviourOptions = ['A', 'B', 'C', 'D'];
+    const interpretationOptions = ['1', '2', '3', '4'];
+    final cardIds = List.generate(12, (i) => 'card_${(i + 1).toString().padLeft(2, '0')}');
+
+    String testCountText = 'Running $testCount random TWLVE assessments...\n';
+    appPrintGreen(testCountText);
+    result += '$testCountText\n';
+
+    Map<String, int> bIdCount = {'A': 0, 'B': 0, 'C': 0, 'D': 0};
+    Map<String, int> iIdCount = {'1': 0, '2': 0, '3': 0, '4': 0};
+
+    for (int test = 1; test <= testCount; test++) {
+      final answers = <CardAnswerModel>[];
+
+      for (final cardId in cardIds) {
+        final bId = behaviourOptions[random.nextInt(4)];
+        final iId = interpretationOptions[random.nextInt(4)];
+        answers.add(
+          CardAnswerModel(
+            cardId: cardId,
+            behaviourId: bId,
+            interpretationId: iId,
+          ),
+        );
+        bIdCount[bId] = bIdCount[bId]! + 1;
+        iIdCount[iId] = iIdCount[iId]! + 1;
+      }
+
+      try {
+        final result = await _sessionCubit.computeResult(answers);
+        final primaryType = result.loveCodeResult.typeAssignment.typeCode;
+
+        typeCounter[primaryType] = (typeCounter[primaryType] ?? 0) + 1;
+      } catch (e) {
+        appPrintRed('Error on test $test: $e');
+      }
+    }
+
+    result += 'Behaviours Options Counts: \n${bIdCount.entries.map((e) => '${e.key} * ${e.value}').join('\n')}\n';
+    result += 'Interpretation Options Counts: \n${iIdCount.entries.map((e) => '${e.key} * ${e.value}').join('\n')}\n\n';
+
+    // Sort by count descending
+    final sortedTypes = typeCounter.entries.toList()..sort((a, b) => b.value.compareTo(a.value));
+
+    appPrintGreen('=== PRIMARY TYPE DISTRIBUTION (100 random users) ===');
+    for (final entry in sortedTypes) {
+      final percentage = (entry.value / testCount * 100).toStringAsFixed(1);
+      final typeResultText = '${entry.key.padRight(25)} : ${entry.value.toString().padLeft(3)} ($percentage%)';
+      result += '$typeResultText\n';
+      appPrintCyan(typeResultText);
+    }
+
+    final mostCommonTypeText =
+        'Most common type: ${sortedTypes.first.key} '
+        '(${sortedTypes.first.value} out of 100)';
+
+    appPrintCyan(mostCommonTypeText);
+    result += '\n$mostCommonTypeText\n';
+
+    return result;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Engine Test')),
+      appBar: AppBar(title: const Text('Engine Test - 1.0.2')),
       body: ValueListenableBuilder(
         valueListenable: _isLoaded,
         builder: (context, loaded, child) {
@@ -143,6 +214,49 @@ class _EngineTestPageState extends State<EngineTestPage> {
                   padding: const EdgeInsets.all(16),
 
                   children: [
+                    if (kDebugMode)
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            ...[10, 50, 100, 1000, 5000].map((c) {
+                              return TextButton(
+                                onPressed: () async {
+                                  final result = await runRandomDistributionTest(c);
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return Center(
+                                        child: SingleChildScrollView(
+                                          child: Card(
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  SelectableText(result),
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      context.pop();
+                                                    },
+                                                    child: Text('Close'),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Text('Random Distribution (x$c)'),
+                              );
+                            }).toList(),
+                          ],
+                        ),
+                      ),
                     _actions(),
                     16.heightGap,
                     ...answers.map(_answerWidget),
@@ -307,7 +421,7 @@ class _EngineTestPageState extends State<EngineTestPage> {
               padding: EdgeInsetsGeometry.all(8),
               child: Column(
                 children: [
-                  ...(result?.types ?? []).map((type) {
+                  ...(result?.rankedTypes ?? []).map((type) {
                     return SizedBox(
                       width: double.infinity,
                       child: Card(
