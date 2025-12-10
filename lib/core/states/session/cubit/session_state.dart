@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:pg1/core/models/card_model.dart';
-import 'package:pg1/core/models/choice_model.dart';
-import 'package:pg1/core/models/love_code_result.dart';
+import 'package:pg1/core/models/card_answer_model.dart';
+import 'package:pg1/core/models/twlve_models.dart';
 
 enum SessionStatus {
   initial, // Not started
@@ -25,7 +25,7 @@ class SessionState extends Equatable {
   final int currentCardIndex;
   final CardPhase currentPhase;
   final String? selectedBehaviourId;
-  final List<CardAnswer> answers;
+  final List<CardAnswerModel> answers;
   final LoveCodeResult? result;
   final String? errorMessage;
 
@@ -69,7 +69,7 @@ class SessionState extends Equatable {
     int? currentCardIndex,
     CardPhase? currentPhase,
     String? selectedBehaviourId,
-    List<CardAnswer>? answers,
+    List<CardAnswerModel>? answers,
     LoveCodeResult? result,
     String? errorMessage,
     bool clearSelectedBehaviour = false,

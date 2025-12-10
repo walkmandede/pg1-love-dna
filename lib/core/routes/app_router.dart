@@ -5,6 +5,7 @@ import 'package:pg1/core/routes/app_routes.dart';
 import 'package:pg1/core/shared/type_defs/type_defs.dart';
 import 'package:pg1/core/states/session/cubit/session_cubit.dart';
 import 'package:pg1/features/celebration/celebration_page.dart';
+import 'package:pg1/features/engine_test/engine_test_page.dart';
 import 'package:pg1/features/how_work/how_work_page.dart';
 import 'package:pg1/features/inputs/inputs_page.dart';
 import 'package:pg1/features/lens/interpretation_len/interpretation_len_page.dart';
@@ -17,6 +18,7 @@ import 'package:pg1/features/why_these_moment/why_these_moment_page.dart';
 class AppRouter {
   static final router = GoRouter(
     initialLocation: AppRoutes.onboarding.path,
+    // initialLocation: AppRoutes.engineTest.path,
     redirect: (context, state) {
       if (state.matchedLocation == AppRoutes.results.path) {
         try {
@@ -79,6 +81,13 @@ class AppRouter {
         path: AppRoutes.celebration.path,
         builder: (context, state) {
           return CelebrationPage();
+        },
+      ),
+      GoRoute(
+        name: AppRoutes.engineTest.name,
+        path: AppRoutes.engineTest.path,
+        builder: (context, state) {
+          return EngineTestPage();
         },
       ),
       GoRoute(

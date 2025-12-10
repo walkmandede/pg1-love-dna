@@ -22,7 +22,7 @@ dependencies:
   # Equatable - Simplify equality comparisons in models and Bloc states
   equatable: ^2.0.5
   flutter_svg: ^2.2.3
-  
+  collection: ^1.19.1
   confetti: ^0.8.0
 
 dev_dependencies:
@@ -39,6 +39,7 @@ flutter:
     - assets/json/centroids-json.json
     - assets/json/narratives-json.json
     - assets/json/pattern-insights-json.json
+    - assets/json/twlve_weights.json
     - assets/png/
 
 

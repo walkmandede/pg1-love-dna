@@ -7,6 +7,7 @@
       "name": "pg1",
       "version": "0.1.0",
       "dependencies": [
+        "collection",
         "confetti",
         "equatable",
         "flutter",
@@ -52,6 +53,11 @@
         "flutter",
         "vector_math"
       ]
+    },
+    {
+      "name": "collection",
+      "version": "1.19.1",
+      "dependencies": []
     },
     {
       "name": "flutter_svg",
@@ -128,11 +134,6 @@
     {
       "name": "meta",
       "version": "1.16.0",
-      "dependencies": []
-    },
-    {
-      "name": "collection",
-      "version": "1.19.1",
       "dependencies": []
     },
     {

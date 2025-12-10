@@ -1,94 +1,205 @@
-import '../models/trait_vector.dart';
-import '../models/choice_model.dart';
-import '../models/love_code_result.dart';
+// twlve_scoring_engine.dart
+import 'dart:math';
+import 'package:collection/collection.dart';
+import 'package:pg1/core/models/card_answer_model.dart';
+import 'package:pg1/core/models/twlve_models.dart';
+import 'package:pg1/core/shared/logger/app_logger.dart';
 
-class EngineService {
-  final Map<String, Map<String, BehaviourMapping>> behaviourMappings;
-  final Map<String, Map<String, InterpretationMapping>> interpretationMappings;
-  final Map<String, TraitVector> centroids;
+class EngineResult {
+  LoveCodeResult loveCodeResult;
+  List<TypeAssignment> types;
 
-  EngineService({required this.behaviourMappings, required this.interpretationMappings, required this.centroids});
+  EngineResult({
+    required this.loveCodeResult,
+    required this.types,
+  });
+}
 
-  TraitVector calculateEI(List<CardAnswer> answers) {
-    TraitVector result = TraitVector.zero();
-    for (final answer in answers) {
-      final mapping = behaviourMappings[answer.cardId]?[answer.behaviourId];
-      if (mapping != null) {
-        result = result + TraitVector(mapping.ei);
-      }
+class TwlveScoringEngine {
+  final Map<String, WeightEntry> _weightLookup = {};
+  final List<TypeCentroid> _centroids = [];
+  final Map<String, String> _narratives = {};
+
+  static const String weightsVersion = 'v2.0';
+  static const String centroidVersion = 'v1.0';
+  static const String narrativeVersion = 'v1.0';
+
+  /// Initialize the engine with weights, centroids, and narratives
+  void initialize({
+    required List<WeightEntry> weights,
+    required List<TypeCentroid> centroids,
+    required Map<String, String> narratives,
+  }) {
+    _weightLookup.clear();
+    _centroids.clear();
+    _narratives.clear();
+
+    // Build lookup map: "cardNumber_elementType_optionId" -> WeightEntry
+    for (var entry in weights) {
+      final key = _buildWeightKey(entry.cardNumber, entry.elementType, entry.optionId);
+      _weightLookup[key] = entry;
     }
-    return result;
+
+    _centroids.addAll(centroids);
+    _narratives.addAll(narratives);
   }
 
-  TraitVector calculateCI(List<CardAnswer> answers) {
-    TraitVector result = TraitVector.zero();
-    for (final answer in answers) {
-      final mapping = interpretationMappings[answer.cardId]?[answer.interpretationId];
-      if (mapping != null) {
-        result = result + TraitVector(mapping.ci);
-      }
+  /// Main scoring method
+  EngineResult computeResult(List<CardAnswerModel> answers) {
+    if (answers.length != 12) {
+      throw ArgumentError('Expected 12 card answers, got ${answers.length}');
     }
-    return result;
-  }
 
-  List<String> collectMeaningTags(List<CardAnswer> answers) {
-    final Set<String> tags = {};
-    for (final answer in answers) {
-      final mapping = interpretationMappings[answer.cardId]?[answer.interpretationId];
-      if (mapping != null) {
-        tags.addAll(mapping.tags);
+    // 1. Initialize vectors
+    final eiVector = List<double>.filled(9, 0.0);
+    final ciVector = List<double>.filled(9, 0.0);
+    final meaningTags = <String>[];
+
+    // 2. Accumulate deltas
+    for (var i = 0; i < answers.length; i++) {
+      final answer = answers[i];
+      final cardNumber = i + 1;
+
+      // Lookup behaviour deltas -> update EI
+      final behaviourKey = _buildWeightKey(cardNumber, 'behaviour', answer.behaviourId);
+      final behaviourEntry = _weightLookup[behaviourKey];
+      if (behaviourEntry == null) {
+        throw StateError('Missing behaviour weight: card=$cardNumber, option=${answer.behaviourId}');
       }
+      _addVector(eiVector, behaviourEntry.deltas);
+
+      // Lookup interpretation deltas -> update CI and collect tags
+      final interpretationKey = _buildWeightKey(cardNumber, 'interpretation', answer.interpretationId);
+      final interpretationEntry = _weightLookup[interpretationKey];
+      if (interpretationEntry == null) {
+        throw StateError('Missing interpretation weight: card=$cardNumber, option=${answer.interpretationId}');
+      }
+      _addVector(ciVector, interpretationEntry.deltas);
+      meaningTags.addAll(interpretationEntry.meaningTags);
     }
-    return tags.toList();
-  }
 
-  int calculateTrustScore(TraitVector ei) {
-    return ei.vulnerabilityOpenness + ei.stabilityConsistency - ei.avoidanceWithdrawal - ei.pursuitAnxiety;
-  }
+    // 3. De-duplicate meaning tags
+    final uniqueTags = meaningTags.toSet().toList();
 
-  String calculateContradictionIndex(TraitVector ei, TraitVector ci) {
-    final int raw = (ei.sum - ci.sum).abs();
-    if (raw <= 2) return 'low';
-    if (raw <= 5) return 'medium';
-    return 'high';
-  }
+    // 4. Compute derived metrics
+    final metrics = _computeDerivedMetrics(eiVector, ciVector);
 
-  String calculateStabilityOutlook(TraitVector ei) {
-    final int score = ei.emotionalRegulation + ei.stabilityConsistency - ei.avoidanceWithdrawal - ei.pursuitAnxiety;
-    if (score >= 6) return 'steady';
-    if (score >= 0) return 'variable';
-    return 'reactive';
-  }
+    // 5. Assign type via centroid matching
+    final typeAssignments = _assignTypes(eiVector, ciVector);
+    final typeAssignment = typeAssignments.first;
 
-  List<String> rankTypesByDistance(TraitVector ei, TraitVector ci) {
-    final Map<String, double> distances = {};
+    // 6. Generate narrative
+    final narrative = _generateNarrative(typeAssignment.typeCode, uniqueTags);
 
-    centroids.forEach((typeName, centroid) {
-      // Average distance of EI and CI to centroid
-      final eiDist = ei.distanceTo(centroid);
-      final ciDist = ci.distanceTo(centroid);
-      distances[typeName] = (eiDist + ciDist) / 2;
-    });
+    // 7. Build result
+    final loveCodeResult = LoveCodeResult(
+      timestamp: DateTime.now(),
+      weightsVersion: weightsVersion,
+      centroidVersion: centroidVersion,
+      eiVector: eiVector,
+      ciVector: ciVector,
+      derivedMetrics: metrics,
+      typeAssignment: typeAssignment,
+      meaningTags: uniqueTags,
+      narrativeText: narrative,
+    );
 
-    final sorted = distances.entries.toList()..sort((a, b) => a.value.compareTo(b.value));
-
-    return sorted.map((e) => e.key).toList();
-  }
-
-  TypeAssignment assignTypes(TraitVector ei, TraitVector ci) {
-    final ranked = rankTypesByDistance(ei, ci);
-    return TypeAssignment(
-      primary: ranked[0],
-      stabiliser: ranked[1],
-      growth: ranked.last, // Last type equals to growth opportunity
+    return EngineResult(
+      loveCodeResult: loveCodeResult,
+      types: typeAssignments,
     );
   }
 
-  DerivedMetrics calculateDerivedMetrics(TraitVector ei, TraitVector ci) {
+  String _buildWeightKey(int cardNumber, String elementType, String optionId) {
+    return '${cardNumber}_${elementType}_$optionId';
+  }
+
+  void _addVector(List<double> target, List<double> delta) {
+    for (var i = 0; i < target.length; i++) {
+      target[i] += delta[i];
+    }
+  }
+
+  DerivedMetrics _computeDerivedMetrics(List<double> ei, List<double> ci) {
+    // Simple intensity: Euclidean magnitude
+    final eiIntensity = _magnitude(ei);
+    final ciIntensity = _magnitude(ci);
+
+    // Balance: ratio of magnitudes (normalized)
+    final balance = eiIntensity == 0 && ciIntensity == 0 ? 1.0 : 1.0 - ((eiIntensity - ciIntensity).abs() / max(eiIntensity, ciIntensity));
+
+    // Clarity: average absolute value (how strongly traits are expressed)
+    final avgEi = ei.map((v) => v.abs()).average;
+    final avgCi = ci.map((v) => v.abs()).average;
+    final clarity = (avgEi + avgCi) / 2.0;
+
     return DerivedMetrics(
-      trustScore: calculateTrustScore(ei),
-      contradictionIndex: calculateContradictionIndex(ei, ci),
-      stabilityOutlook: calculateStabilityOutlook(ei),
+      eiIntensity: eiIntensity,
+      ciIntensity: ciIntensity,
+      balance: balance,
+      clarity: clarity,
     );
+  }
+
+  double _magnitude(List<double> vector) {
+    return sqrt(vector.map((v) => v * v).sum);
+  }
+
+  List<TypeAssignment> _assignTypes(List<double> ei, List<double> ci) {
+    // Concatenate EI and CI to form 18-dimensional matching vector
+    final userVector = [...ei, ...ci];
+
+    // Compute distance to each centroid
+    final distances = <String, double>{};
+    for (var centroid in _centroids) {
+      // Expand centroid to 18d by duplicating (or use custom logic)
+      // For now: use only the 9-trait centroid and compare against EI+CI average
+      final combinedUser = _combineVectors(ei, ci);
+      final distance = _euclideanDistance(combinedUser, centroid.vector);
+      distances[centroid.typeCode] = distance;
+    }
+
+    // Find nearest
+    final sorted = distances.entries.toList()..sort((a, b) => a.value.compareTo(b.value));
+    // appPrintCyan(sorted);
+    // final nearest = sorted.first;
+
+    final types = <TypeAssignment>[];
+
+    for (final each in sorted) {
+      final rank = sorted.indexOf(each) + 1;
+      types.add(
+        TypeAssignment(
+          typeCode: each.key,
+          distance: each.value,
+          rank: rank,
+        ),
+      );
+    }
+
+    return types;
+  }
+
+  /// Combine EI and CI into single 9-trait vector (simple average)
+  List<double> _combineVectors(List<double> ei, List<double> ci) {
+    return List.generate(9, (i) => (ei[i] + ci[i]) / 2.0);
+  }
+
+  double _euclideanDistance(List<double> a, List<double> b) {
+    var sum = 0.0;
+    for (var i = 0; i < a.length; i++) {
+      final diff = a[i] - b[i];
+      sum += diff * diff;
+    }
+    return sqrt(sum);
+  }
+
+  String _generateNarrative(String typeCode, List<String> meaningTags) {
+    final baseNarrative = _narratives[typeCode] ?? 'Type narrative not found.';
+
+    // For MVP: return base narrative with meaning tag summary
+    final tagSummary = meaningTags.isEmpty ? '' : '\n\nKey themes in your responses: ${meaningTags.join(', ')}';
+
+    return baseNarrative + tagSummary;
   }
 }

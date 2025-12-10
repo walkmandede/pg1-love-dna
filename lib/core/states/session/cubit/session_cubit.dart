@@ -1,7 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pg1/core/models/card_model.dart';
-import 'package:pg1/core/models/choice_model.dart';
+import 'package:pg1/core/models/card_answer_model.dart';
 import 'package:pg1/core/models/pattern_insight.dart';
+import 'package:pg1/core/models/twlve_models.dart';
+import 'package:pg1/core/services/data_loader_service.dart';
 import 'package:pg1/core/services/engine_service.dart';
 import 'package:pg1/core/services/json_loader.dart';
 import 'package:pg1/core/shared/logger/app_logger.dart';
@@ -10,9 +12,8 @@ import 'package:uuid/uuid.dart';
 import 'session_state.dart';
 
 class SessionCubit extends Cubit<SessionState> {
-  late EngineService _engineService;
+  final TwlveScoringEngine _engine = TwlveScoringEngine();
   // final FirestoreService _firestoreService = FirestoreService();
-  Map<String, Map<String, String>>? _narratives;
   Map<String, PatternInsight>? _patternInsights;
 
   SessionCubit() : super(SessionState());
@@ -23,20 +24,26 @@ class SessionCubit extends Cubit<SessionState> {
     return state.cards.map((c) => c.id).toList().indexOf(card.id);
   }
 
+  Future<void> _initEngine() async {
+    final weights = await TwlveDataLoader.loadWeights('assets/json/twlve_weights.json');
+    final centroids = TwlveDataLoader.loadCentroids();
+    final narratives = TwlveDataLoader.loadNarratives();
+    appPrintGreen(centroids);
+    _engine.initialize(
+      weights: weights,
+      centroids: centroids,
+      narratives: narratives,
+    );
+  }
+
   Future<void> startSession() async {
     try {
       // Load all JSON data
       final cards = await JsonLoader.loadCards();
-
-      final behaviourMappings = await JsonLoader.loadBehaviourMappings();
-      final interpretationMappings = await JsonLoader.loadInterpretationMappings();
-      final centroids = await JsonLoader.loadCentroids();
-
-      _narratives = await JsonLoader.loadNarratives();
       _patternInsights = await JsonLoader.loadPatternInsights();
+      await _initEngine();
 
       // Initialize engine service
-      _engineService = EngineService(behaviourMappings: behaviourMappings, interpretationMappings: interpretationMappings, centroids: centroids);
       appPrintGreen('Session started');
 
       // Generate session ID
@@ -67,7 +74,7 @@ class SessionCubit extends Cubit<SessionState> {
   LenPageMeta? addAnswer({required CardModel card, required Behaviour behaviour, required Interpretation interpretation}) {
     final answerCardIds = state.answers.map((a) => a.cardId);
     if (!answerCardIds.contains(card.id)) {
-      final cardAnswer = CardAnswer(cardId: card.id, behaviourId: behaviour.id, interpretationId: interpretation.id);
+      final cardAnswer = CardAnswerModel(cardId: card.id, behaviourId: behaviour.id, interpretationId: interpretation.id);
       state.answers.add(cardAnswer);
       emit(state);
 
@@ -79,5 +86,9 @@ class SessionCubit extends Cubit<SessionState> {
       return (cardModel: card, cardAnswer: cardAnswer, patternInsight: getPatternInsightForScoring(card.behaviourLensPatternId)!);
     }
     return null;
+  }
+
+  Future<EngineResult> computeResult(List<CardAnswerModel> answers) async {
+    return _engine.computeResult(answers);
   }
 }

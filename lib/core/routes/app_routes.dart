@@ -9,6 +9,7 @@ enum AppRoutes {
   selfViewLen(name: 'selfViewLen', path: '/selfViewLen'),
   loveLibrary(name: 'loveLibrary', path: '/loveLibrary'),
   celebration(name: 'celebration', path: '/celebration'),
+  engineTest(name: 'engineTest', path: '/engineTest'),
   results(name: 'results', path: '/results');
 
   final String name;

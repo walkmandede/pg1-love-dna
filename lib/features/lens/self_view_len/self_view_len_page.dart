@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pg1/core/models/card_model.dart';
-import 'package:pg1/core/models/choice_model.dart';
+import 'package:pg1/core/models/card_answer_model.dart';
 import 'package:pg1/core/models/pattern_insight.dart';
 import 'package:pg1/core/shared/assets/app_svgs.dart';
 import 'package:pg1/core/shared/constants/app_constants.dart';
@@ -17,7 +17,7 @@ import 'package:pg1/core/shared/widgets/disclosure_message_widget.dart';
 
 class SelfViewLenPage extends StatefulWidget {
   final CardModel cardModel;
-  final CardAnswer cardAnswer;
+  final CardAnswerModel cardAnswer;
   final PatternInsight patternInsight;
 
   const SelfViewLenPage({
@@ -33,7 +33,7 @@ class SelfViewLenPage extends StatefulWidget {
 
 class _SelfViewLenPageState extends State<SelfViewLenPage> {
   CardModel get _cardModel => widget.cardModel;
-  CardAnswer get _cardAnswer => widget.cardAnswer;
+  CardAnswerModel get _cardAnswer => widget.cardAnswer;
   PatternInsight get _patternInsight => widget.patternInsight;
 
   @override

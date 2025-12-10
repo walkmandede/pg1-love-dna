@@ -79,10 +79,10 @@ class _CelebrationPageState extends State<CelebrationPage> with SingleTickerProv
                       child: ConfettiWidget(
                         confettiController: _confettiController,
                         blastDirectionality: BlastDirectionality.explosive,
-                        maxBlastForce: 18,
+                        maxBlastForce: 12,
                         minBlastForce: 4,
-                        emissionFrequency: 0.005,
-                        numberOfParticles: 60,
+                        emissionFrequency: 0.05,
+                        numberOfParticles: 40,
                         gravity: 0.05,
                         colors: const [
                           AppColor.primary,

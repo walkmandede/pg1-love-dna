@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pg1/core/models/card_model.dart';
-import 'package:pg1/core/models/choice_model.dart';
+import 'package:pg1/core/models/card_answer_model.dart';
 import 'package:pg1/core/models/pattern_insight.dart';
 import 'package:pg1/core/routes/app_routes.dart';
 import 'package:pg1/core/shared/constants/app_constants.dart';
@@ -21,7 +21,7 @@ import 'package:pg1/core/states/session/cubit/session_cubit.dart';
 
 class InterpretationLenPage extends StatefulWidget {
   final CardModel cardModel;
-  final CardAnswer cardAnswer;
+  final CardAnswerModel cardAnswer;
   final PatternInsight patternInsight;
 
   const InterpretationLenPage({
@@ -37,7 +37,7 @@ class InterpretationLenPage extends StatefulWidget {
 
 class _InterpretationLenPageState extends State<InterpretationLenPage> {
   CardModel get _cardModel => widget.cardModel;
-  CardAnswer get _cardAnswer => widget.cardAnswer;
+  CardAnswerModel get _cardAnswer => widget.cardAnswer;
   PatternInsight get _patternInsight => widget.patternInsight;
 
   void _onClickContinue() async {
