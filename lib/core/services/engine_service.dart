@@ -5,10 +5,23 @@ import 'package:pg1/core/models/twlve_models.dart';
 import 'package:pg1/core/shared/logger/app_logger.dart';
 
 class EngineResult {
+  final TwlveScoringEngine twlveScoringEngine;
   final LoveCodeResult loveCodeResult;
   final List<TypeAssignment> rankedTypes;
+  final List<double> eIVectors;
+  final List<double> cIVectors;
+  final List<double> userVectors;
+  final List<String> meaningTags;
 
-  EngineResult({required this.loveCodeResult, required this.rankedTypes});
+  EngineResult({
+    required this.twlveScoringEngine,
+    required this.loveCodeResult,
+    required this.rankedTypes,
+    required this.eIVectors,
+    required this.cIVectors,
+    required this.userVectors,
+    required this.meaningTags,
+  });
 }
 
 class TwlveScoringEngine {
@@ -33,6 +46,9 @@ class TwlveScoringEngine {
     _centroids.clear();
     _centroids.addAll(centroids);
     _narratives.addAll(narratives);
+    for (final c in _centroids) {
+      appPrintCyan(c);
+    }
   }
 
   EngineResult computeResult(List<CardAnswerModel> answers) {
@@ -87,7 +103,15 @@ class TwlveScoringEngine {
       narrativeText: narrative,
     );
 
-    return EngineResult(loveCodeResult: result, rankedTypes: rankedTypes);
+    return EngineResult(
+      twlveScoringEngine: this,
+      loveCodeResult: result,
+      rankedTypes: rankedTypes,
+      cIVectors: ciVector,
+      eIVectors: eiVector,
+      meaningTags: meaningTags.toList(),
+      userVectors: userVector,
+    );
   }
 
   // ────────────────────── Helpers ──────────────────────
@@ -121,10 +145,10 @@ class TwlveScoringEngine {
     });
   }
 
-  double _euclidean(List<double> a, List<double> b) {
+  double _euclidean(List<double> userVector, List<double> centroids) {
     double sum = 0.0;
-    for (int i = 0; i < a.length; i++) {
-      final d = a[i] - b[i];
+    for (int i = 0; i < userVector.length; i++) {
+      final d = userVector[i] - centroids[i];
       sum += d * d;
     }
     return sqrt(sum);

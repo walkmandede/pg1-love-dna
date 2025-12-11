@@ -201,7 +201,7 @@ class _EngineTestPageState extends State<EngineTestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Engine Test - 1.0.3')),
+      appBar: AppBar(title: const Text('Engine Test - 1.0.4')),
       body: ValueListenableBuilder(
         valueListenable: _isLoaded,
         builder: (context, loaded, child) {
@@ -238,6 +238,7 @@ class _EngineTestPageState extends State<EngineTestPage> {
                     ),
                     _distributionsTest(),
                     16.heightGap,
+                    _meta(),
                     ExpansionTile(
                       title: Text('Types'),
                       children: [
@@ -298,8 +299,57 @@ class _EngineTestPageState extends State<EngineTestPage> {
             },
             child: Text('Random Distribution (x$c)'),
           );
-        }).toList(),
+        }),
       ],
+    );
+  }
+
+  Widget _meta() {
+    return ValueListenableBuilder(
+      valueListenable: _result,
+      builder: (context, result, child) {
+        return ExpansionTile(
+          title: Text('Meta'),
+          children: [
+            TextField(
+              readOnly: true,
+              controller: TextEditingController(text: result?.eIVectors.join(',') ?? ''),
+              decoration: InputDecoration(
+                labelText: 'EI Vectors',
+                border: InputBorder.none,
+              ),
+            ),
+            8.heightGap,
+            TextField(
+              readOnly: true,
+              controller: TextEditingController(text: result?.cIVectors.join(',') ?? ''),
+              decoration: InputDecoration(
+                labelText: 'CI Vectors',
+                border: InputBorder.none,
+              ),
+            ),
+            8.heightGap,
+            TextField(
+              readOnly: true,
+              controller: TextEditingController(text: result?.userVectors.map((uv) => uv.toStringAsFixed(2)).join(',') ?? ''),
+              decoration: InputDecoration(
+                labelText: 'User Vectors (only show 2 decimal place, but work full decimal behind the scene)',
+                border: InputBorder.none,
+              ),
+            ),
+            8.heightGap,
+            TextField(
+              readOnly: true,
+              controller: TextEditingController(text: result?.meaningTags.join(',') ?? ''),
+              decoration: InputDecoration(
+                labelText: 'Meaning Tags',
+                border: InputBorder.none,
+              ),
+            ),
+            16.heightGap,
+          ],
+        );
+      },
     );
   }
 
