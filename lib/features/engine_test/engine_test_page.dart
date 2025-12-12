@@ -453,7 +453,7 @@ class _EngineTestPageState extends State<EngineTestPage> {
           child: Card(
             child: Padding(
               padding: EdgeInsetsGeometry.all(8),
-              child: Text(_prettifyJson(result?.loveCodeResult.toJson() ?? {})),
+              child: SelectableText(_prettifyJson(result?.loveCodeResult.toJson() ?? {})),
             ),
           ),
         );
