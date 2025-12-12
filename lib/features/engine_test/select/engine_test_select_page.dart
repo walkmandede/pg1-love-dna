@@ -13,7 +13,7 @@ class EngineTestSelectPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Engine Test - 1.0.4'),
+        title: Text('Engine Test - 1.0.6'),
       ),
       body: SizedBox.expand(
         child: Padding(
