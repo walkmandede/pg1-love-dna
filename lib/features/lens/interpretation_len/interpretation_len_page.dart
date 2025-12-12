@@ -37,7 +37,6 @@ class InterpretationLenPage extends StatefulWidget {
 
 class _InterpretationLenPageState extends State<InterpretationLenPage> {
   CardModel get _cardModel => widget.cardModel;
-  CardAnswerModel get _cardAnswer => widget.cardAnswer;
   PatternInsight get _patternInsight => widget.patternInsight;
 
   void _onClickContinue() async {

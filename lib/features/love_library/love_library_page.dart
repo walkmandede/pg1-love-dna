@@ -1,12 +1,9 @@
 // ignore_for_file: deprecated_member_use
-
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:pg1/core/models/card_model.dart';
 import 'package:pg1/core/shared/assets/app_svgs.dart';
 import 'package:pg1/core/shared/constants/app_constants.dart';
-import 'package:pg1/core/shared/enums/pattern_card_state_enum.dart';
 import 'package:pg1/core/shared/extensions/build_context_extension.dart';
 import 'package:pg1/core/shared/extensions/card_model_extension.dart';
 import 'package:pg1/core/shared/extensions/num_extension.dart';

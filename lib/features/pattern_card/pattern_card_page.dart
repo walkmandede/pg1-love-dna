@@ -1,6 +1,4 @@
 import 'dart:math';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -34,9 +32,9 @@ class _PatternCardPageState extends State<PatternCardPage> {
   Behaviour? _selectedBehaviour;
   Interpretation? _selectedInterpretation;
 
-  SessionCubit get _sessiobCubit => context.read<SessionCubit>();
+  SessionCubit get _sessionCubit => context.read<SessionCubit>();
 
-  int get currentIndex => _sessiobCubit.state.cards.map((c) => c.id).toList().indexOf(_card.id);
+  int get currentIndex => _sessionCubit.state.cards.map((c) => c.id).toList().indexOf(_card.id);
 
   @override
   void initState() {
@@ -304,8 +302,16 @@ class _PatternCardPageState extends State<PatternCardPage> {
         if (!isValid) {
           return;
         }
-        final meta = _sessiobCubit.addAnswer(card: _card, behaviour: _selectedBehaviour!, interpretation: _selectedInterpretation!);
-        context.pushReplacementNamed(AppRoutes.interpretationLen.name, extra: meta);
+        final meta = _sessionCubit.addAnswer(card: _card, behaviour: _selectedBehaviour!, interpretation: _selectedInterpretation!);
+        // context.pushReplacementNamed(AppRoutes.interpretationLen.name, extra: meta);
+        // context.pushReplacementNamed(AppRoutes.patternCard.name, extra: meta);
+        final int currentCardIndex = _sessionCubit.state.answers.length;
+        if (currentCardIndex < 12) {
+          final card = _sessionCubit.state.cards[currentCardIndex];
+          context.pushReplacementNamed(AppRoutes.patternCard.name, extra: card);
+        } else {
+          context.pushReplacementNamed(AppRoutes.celebration.name);
+        }
       },
       isDisabled: !isValid,
       width: double.infinity,

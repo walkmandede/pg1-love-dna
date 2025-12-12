@@ -33,7 +33,6 @@ class SelfViewLenPage extends StatefulWidget {
 
 class _SelfViewLenPageState extends State<SelfViewLenPage> {
   CardModel get _cardModel => widget.cardModel;
-  CardAnswerModel get _cardAnswer => widget.cardAnswer;
   PatternInsight get _patternInsight => widget.patternInsight;
 
   @override

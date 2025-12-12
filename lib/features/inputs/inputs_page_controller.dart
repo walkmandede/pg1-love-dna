@@ -136,18 +136,6 @@ class InputsPageController extends AppPageController {
     return age < 18;
   }
 
-  bool _isValidLocation(String? location) {
-    if (location == null) return false;
-
-    const allowed = {
-      "London",
-      "Other (UK)",
-      "Outside UK",
-    };
-
-    return allowed.contains(location);
-  }
-
   Future<void> onContinuePressed(BuildContext context) async {
     if (!isValidInput.value) {
       return;
