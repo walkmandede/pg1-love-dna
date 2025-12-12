@@ -33,6 +33,13 @@ class TwlveScoringEngine {
   static const String weightsVersion = 'v2.0';
   static const String centroidVersion = 'v1.0';
 
+  Map<String, dynamic> toMap() {
+    return {
+      'weights': _weightLookup,
+      'centroids': _centroids,
+    };
+  }
+
   void initialize({
     required List<WeightEntry> weights,
     required List<TypeCentroid> centroids,
