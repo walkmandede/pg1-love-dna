@@ -8,7 +8,6 @@
       "version": "0.1.0",
       "dependencies": [
         "collection",
-        "confetti",
         "equatable",
         "flutter",
         "flutter_bloc",
@@ -43,14 +42,6 @@
         "stack_trace",
         "stream_channel",
         "test_api",
-        "vector_math"
-      ]
-    },
-    {
-      "name": "confetti",
-      "version": "0.8.0",
-      "dependencies": [
-        "flutter",
         "vector_math"
       ]
     },
