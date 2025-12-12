@@ -18,6 +18,7 @@ import 'package:pg1/features/why_these_moment/why_these_moment_page.dart';
 class AppRouter {
   static final router = GoRouter(
     initialLocation: AppRoutes.onboarding.path,
+    // initialLocation: AppRoutes.celebration.path,
     // initialLocation: AppRoutes.engineTest.path,
     redirect: (context, state) {
       if (state.matchedLocation == AppRoutes.results.path) {

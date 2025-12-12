@@ -37,14 +37,6 @@ file:///Users/kyawphyoehan/.pub-cache/hosted/pub.dev/collection-1.19.1/lib/src/u
 file:///Users/kyawphyoehan/.pub-cache/hosted/pub.dev/collection-1.19.1/lib/src/unmodifiable_wrappers.dart
 file:///Users/kyawphyoehan/.pub-cache/hosted/pub.dev/collection-1.19.1/lib/src/utils.dart
 file:///Users/kyawphyoehan/.pub-cache/hosted/pub.dev/collection-1.19.1/lib/src/wrappers.dart
-file:///Users/kyawphyoehan/.pub-cache/hosted/pub.dev/confetti-0.8.0/lib/confetti.dart
-file:///Users/kyawphyoehan/.pub-cache/hosted/pub.dev/confetti-0.8.0/lib/src/confetti.dart
-file:///Users/kyawphyoehan/.pub-cache/hosted/pub.dev/confetti-0.8.0/lib/src/constants.dart
-file:///Users/kyawphyoehan/.pub-cache/hosted/pub.dev/confetti-0.8.0/lib/src/enums/blast_directionality.dart
-file:///Users/kyawphyoehan/.pub-cache/hosted/pub.dev/confetti-0.8.0/lib/src/enums/confetti_controller_state.dart
-file:///Users/kyawphyoehan/.pub-cache/hosted/pub.dev/confetti-0.8.0/lib/src/helper.dart
-file:///Users/kyawphyoehan/.pub-cache/hosted/pub.dev/confetti-0.8.0/lib/src/particle.dart
-file:///Users/kyawphyoehan/.pub-cache/hosted/pub.dev/confetti-0.8.0/lib/src/particle_stats.dart
 file:///Users/kyawphyoehan/.pub-cache/hosted/pub.dev/crypto-3.0.7/lib/crypto.dart
 file:///Users/kyawphyoehan/.pub-cache/hosted/pub.dev/crypto-3.0.7/lib/src/digest.dart
 file:///Users/kyawphyoehan/.pub-cache/hosted/pub.dev/crypto-3.0.7/lib/src/digest_sink.dart
@@ -1395,7 +1387,6 @@ file:///Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/.dart_tool/
 file:///Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/models/card_answer_model.dart
 file:///Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/models/card_model.dart
 file:///Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/models/pattern_insight.dart
-file:///Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/models/trait_vector.dart
 file:///Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/models/twlve_models.dart
 file:///Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/routes/app_router.dart
 file:///Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/routes/app_routes.dart
@@ -1404,11 +1395,11 @@ file:///Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/se
 file:///Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/services/json_loader.dart
 file:///Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/shared/assets/app_svgs.dart
 file:///Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/shared/commons/app_controller.dart
+file:///Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/shared/commons/app_function.dart
 file:///Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/shared/constants/app_constants.dart
 file:///Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/shared/constants/strings.dart
 file:///Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/shared/enums/app_location_enum.dart
 file:///Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/shared/enums/gender_enum.dart
-file:///Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/shared/enums/pattern_card_state_enum.dart
 file:///Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/shared/enums/supporting_traits_enum.dart
 file:///Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/shared/extensions/build_context_extension.dart
 file:///Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/shared/extensions/card_model_extension.dart

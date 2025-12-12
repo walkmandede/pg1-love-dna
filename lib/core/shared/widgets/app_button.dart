@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:pg1/core/shared/commons/app_function.dart';
 import 'package:pg1/core/shared/constants/app_constants.dart';
 import 'package:pg1/core/shared/theme/app_color.dart';
 
@@ -140,6 +141,7 @@ class _AppButtonState extends State<AppButton> {
     return MouseRegion(
       cursor: _disabled ? SystemMouseCursors.forbidden : SystemMouseCursors.click,
       onEnter: (_) {
+        vibrateNow();
         if (!_disabled) setState(() => _isHovered = true);
       },
       onExit: (_) {
@@ -147,9 +149,11 @@ class _AppButtonState extends State<AppButton> {
       },
       child: GestureDetector(
         onTapDown: (_) {
+          vibrateNow();
           if (!_disabled) setState(() => _isPressed = true);
         },
         onTapUp: (_) {
+          vibrateNow();
           if (!_disabled) {
             setState(() => _isPressed = false);
             widget.onPressed?.call();

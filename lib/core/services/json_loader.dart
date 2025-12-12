@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:pg1/core/models/pattern_insight.dart';
 import '../models/card_model.dart';
 import '../models/card_answer_model.dart';
-import '../models/trait_vector.dart';
 
 class JsonLoader {
   static Future<List<CardModel>> loadCards() async {
@@ -40,19 +39,6 @@ class JsonLoader {
       (options as Map<String, dynamic>).forEach((optionId, mapping) {
         result[cardId]![optionId] = InterpretationMapping.fromJson(mapping);
       });
-    });
-    return result;
-  }
-
-  static Future<Map<String, TraitVector>> loadCentroids() async {
-    final String jsonString = await rootBundle.loadString('assets/json/centroids-json.json');
-    final Map<String, dynamic> data = json.decode(jsonString);
-    final Map<String, dynamic> types = data['types'];
-
-    final Map<String, TraitVector> result = {};
-    types.forEach((typeName, typeData) {
-      final List<dynamic> centroid = typeData['centroid'];
-      result[typeName] = TraitVector(centroid.map((e) => e as int).toList());
     });
     return result;
   }
