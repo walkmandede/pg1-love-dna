@@ -1,3 +1,3 @@
 class AppStrings {
-  static const String disclosureMessage = 'Your responses are private, non-clinical, and never linked to your identity.';
+  static const String disclosureMessage = 'Your responses are private, non-clinical,\nand never linked to your identity.';
 }
