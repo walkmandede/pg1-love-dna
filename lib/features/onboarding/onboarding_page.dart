@@ -137,7 +137,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           context.pushNamed(AppRoutes.howWork.name);
                         },
                         child: Text(
-                          'How TWLVE work',
+                          'How TWLVE works',
                           style: AppTextStyles.linkText.copyWith(
                             decoration: TextDecoration.underline,
                           ),

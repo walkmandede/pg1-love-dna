@@ -1,13 +1,11 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pg1/core/models/card_answer_model.dart';
 import 'package:pg1/core/services/engine_service.dart';
-import 'package:pg1/core/shared/constants/app_constants.dart';
 import 'package:pg1/core/shared/extensions/num_extension.dart';
 import 'package:pg1/core/shared/logger/app_logger.dart';
 import 'package:pg1/core/shared/theme/app_color.dart';
@@ -236,7 +234,7 @@ class _EngineTestPageState extends State<EngineTestPage> {
                         ),
                       ],
                     ),
-                    _distributionsTest(),
+                    _distributionsTest(context),
                     16.heightGap,
                     _meta(),
                     ExpansionTile(
@@ -262,40 +260,42 @@ class _EngineTestPageState extends State<EngineTestPage> {
     );
   }
 
-  Widget _distributionsTest() {
+  Widget _distributionsTest(BuildContext context) {
     return Wrap(
       children: [
         ...[10, 50, 100, 1000, 5000].map((c) {
           return TextButton(
             onPressed: () async {
               final result = await runRandomDistributionTest(c);
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return Center(
-                    child: SingleChildScrollView(
-                      child: Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SelectableText(result),
-                              TextButton(
-                                onPressed: () {
-                                  context.pop();
-                                },
-                                child: Text('Close'),
-                              ),
-                            ],
+              if (context.mounted) {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Center(
+                      child: SingleChildScrollView(
+                        child: Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SelectableText(result),
+                                TextButton(
+                                  onPressed: () {
+                                    context.pop();
+                                  },
+                                  child: Text('Close'),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  );
-                },
-              );
+                    );
+                  },
+                );
+              }
             },
             child: Text('Random Distribution (x$c)'),
           );

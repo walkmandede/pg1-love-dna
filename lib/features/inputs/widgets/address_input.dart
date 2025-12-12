@@ -33,7 +33,7 @@ class AddressInput extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'How do you describle\nyourself?',
+                          'Where are you based?',
                           style: AppTextStyles.inputLabel,
                           textAlign: TextAlign.center,
                         ),

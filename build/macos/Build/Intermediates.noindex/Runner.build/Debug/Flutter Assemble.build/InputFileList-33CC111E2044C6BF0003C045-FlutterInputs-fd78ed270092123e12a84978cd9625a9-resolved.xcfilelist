@@ -1254,7 +1254,7 @@
 /Users/kyawphyoehan/Desktop/development/flutter/packages/flutter_tools/lib/src/build_system/targets/icon_tree_shaker.dart
 /Users/kyawphyoehan/Desktop/development/flutter/packages/flutter_tools/lib/src/build_system/targets/macos.dart
 /Users/kyawphyoehan/Desktop/development/flutter/packages/flutter_tools/lib/src/build_system/targets/native_assets.dart
-/Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/DOES_NOT_EXIST_RERUN_FOR_WILDCARD960084635
+/Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/DOES_NOT_EXIST_RERUN_FOR_WILDCARD537436691
 /Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/assets/font/inter/Inter_18pt-Bold.ttf
 /Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/assets/font/inter/Inter_18pt-Light.ttf
 /Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/assets/font/inter/Inter_18pt-Medium.ttf
@@ -1279,7 +1279,6 @@
 /Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/models/card_answer_model.dart
 /Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/models/card_model.dart
 /Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/models/pattern_insight.dart
-/Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/models/trait_vector.dart
 /Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/models/twlve_models.dart
 /Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/routes/app_router.dart
 /Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/routes/app_routes.dart
@@ -1288,11 +1287,11 @@
 /Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/services/json_loader.dart
 /Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/shared/assets/app_svgs.dart
 /Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/shared/commons/app_controller.dart
+/Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/shared/commons/app_function.dart
 /Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/shared/constants/app_constants.dart
 /Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/shared/constants/strings.dart
 /Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/shared/enums/app_location_enum.dart
 /Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/shared/enums/gender_enum.dart
-/Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/shared/enums/pattern_card_state_enum.dart
 /Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/shared/enums/supporting_traits_enum.dart
 /Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/shared/extensions/build_context_extension.dart
 /Users/kyawphyoehan/Desktop/flutter_projects/pg1_question/pg1/lib/core/shared/extensions/card_model_extension.dart

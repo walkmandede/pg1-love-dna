@@ -7,6 +7,7 @@ import 'package:pg1/core/shared/constants/app_constants.dart';
 import 'package:pg1/core/shared/extensions/build_context_extension.dart';
 import 'package:pg1/core/shared/extensions/num_extension.dart';
 import 'package:pg1/core/shared/theme/app_color.dart';
+import 'package:pg1/core/shared/theme/app_text_styles.dart';
 import 'package:pg1/core/shared/widgets/app_button.dart';
 import 'package:pg1/core/shared/widgets/app_responsive_builder.dart';
 import 'package:pg1/core/shared/widgets/disclosure_message_widget.dart';
@@ -68,11 +69,12 @@ class _WhyTheseMomentPageState extends State<WhyTheseMomentPage> {
               ),
               24.heightGap,
               Text(
-                'You\'ll respond to 12 everyday\nscenarios.\nThey reveal your emotional patterns\n—\nhow you respond and how you\ninterpret meaning.\nIt\'s quick, lightweight, and completely private.',
-                style: TextStyle(
-                  fontWeight: FontWeight.normal,
-                  fontSize: 14,
-                ),
+                '''Why these moments?
+You’ll respond to 12 everyday scenarios.
+Together, they reveal patterns in how you respond
+and how you interpret meaning.
+Quick, lightweight, and completely private.''',
+                style: AppTextStyles.bodyText,
                 textAlign: TextAlign.center,
               ),
 

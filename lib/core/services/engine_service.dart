@@ -72,7 +72,8 @@ class TwlveScoringEngine {
       _add(eiVector, bEntry.deltas);
 
       // Interpretation → CI + tags
-      final iKey = '${cardId}_interpretation_${answer.interpretationId}'; // e.g. g. card_01_interpretation_1
+      // e.g. g.      card_01_interpretation_1
+      final iKey = '${cardId}_interpretation_${answer.interpretationId}';
       final iEntry = _weightLookup[iKey];
       if (iEntry == null) {
         throw StateError('Missing weight: $iKey');
@@ -117,7 +118,9 @@ class TwlveScoringEngine {
   // ────────────────────── Helpers ──────────────────────
 
   void _add(List<double> target, List<double> delta) {
-    for (var i = 0; i < 9; i++) target[i] += delta[i];
+    for (var i = 0; i < 9; i++) {
+      target[i] += delta[i];
+    }
   }
 
   List<TypeAssignment> _assignTypes(List<double> userVector) {

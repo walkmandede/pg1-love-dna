@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/foundation.dart';
 
 void appPrintGreen(dynamic data, {String? title}) {

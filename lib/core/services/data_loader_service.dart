@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:pg1/core/models/twlve_models.dart';
 
 /// Loads weights, centroids, and narratives from assets
+///  “…” or “…”
 class TwlveDataLoader {
   /// Load weights from JSON
   /// Expected JSON structure: { "version": "v2.0", "weights": [...] }
