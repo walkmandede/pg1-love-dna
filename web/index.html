@@ -20,13 +20,13 @@
     <link rel="manifest" href="manifest.json" />
 
     <!-- ▼ Splash Screen Styles -->
-    <style>
+   <style>
       body, html {
         margin: 0;
         padding: 0;
         width: 100%;
         height: 100%;
-        background: #000000;
+        background: #000000; /* Changed to black */
       }
 
       #splash {
@@ -39,7 +39,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background: white;
+        background: #000000; /* Splash background also black */
         z-index: 9999;
         font-family: Arial, sans-serif;
       }
@@ -53,7 +53,7 @@
       #splash-text {
         margin-top: 18px;
         font-size: 16px;
-        color: #333;
+        color: #fff; /* Optional: make text readable on black */
       }
 
       @keyframes pulse {
