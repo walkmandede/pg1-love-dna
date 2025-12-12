@@ -47,13 +47,22 @@
       #splash img {
         width: 120px;
         height: 120px;
-        opacity: 0.85;
+        animation: pulse 2s ease-in-out infinite;
       }
 
       #splash-text {
         margin-top: 18px;
         font-size: 16px;
         color: #333;
+      }
+
+      @keyframes pulse {
+        0%, 100% {
+          opacity: 0.3;
+        }
+        50% {
+          opacity: 1;
+        }
       }
 
       .fade-out {
@@ -71,8 +80,8 @@
 
     <!-- ▼ Splash Screen -->
     <div id="splash">
-      <!-- <img src="assets/png/twlve_logo.png" alt="Loading" /> -->
-      <div id="splash-text">The engine is loading ...</div>
+      <img src="icons/twlve_logo.png" alt="Loading" />
+      <!-- <div id="splash-text">The engine is loading ...</div> -->
     </div>
 
     <!-- ▼ Route Fix -->
