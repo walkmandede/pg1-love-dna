@@ -23,6 +23,8 @@ dependencies:
   equatable: ^2.0.5
   flutter_svg: ^2.2.3
   collection: ^1.19.1
+  file_picker: ^10.3.7
+  csv: ^6.0.0
 
 dev_dependencies:
   flutter_test:
@@ -43,18 +45,6 @@ flutter:
 
 
   fonts:
-    - family: Inter
-      fonts:
-        - asset: assets/font/inter/Inter_18pt-Light.ttf
-          weight: 300
-        - asset: assets/font/inter/Inter_18pt-Regular.ttf
-          weight: 400
-        - asset: assets/font/inter/Inter_18pt-Medium.ttf
-          weight: 500
-        - asset: assets/font/inter/Inter_18pt-SemiBold.ttf
-          weight: 600
-        - asset: assets/font/inter/Inter_18pt-Bold.ttf
-          weight: 700
     
     - family: SFProText
       fonts:

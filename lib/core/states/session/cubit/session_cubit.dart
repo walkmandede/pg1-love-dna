@@ -11,7 +11,7 @@ import 'package:uuid/uuid.dart';
 import 'session_state.dart';
 
 class SessionCubit extends Cubit<SessionState> {
-  final TwlveScoringEngine _engine = TwlveScoringEngine();
+  final TwlveScoringEngine engine = TwlveScoringEngine();
   // final FirestoreService _firestoreService = FirestoreService();
   Map<String, PatternInsight>? _patternInsights;
 
@@ -28,7 +28,7 @@ class SessionCubit extends Cubit<SessionState> {
     final centroids = TwlveDataLoader.loadCentroids();
     final narratives = TwlveDataLoader.loadNarratives();
     appPrintGreen(centroids);
-    _engine.initialize(
+    engine.initialize(
       weights: weights,
       centroids: centroids,
       narratives: narratives,
@@ -87,7 +87,7 @@ class SessionCubit extends Cubit<SessionState> {
     return null;
   }
 
-  Future<EngineResult> computeResult(List<CardAnswerModel> answers) async {
-    return _engine.computeResult(answers);
+  EngineResult computeResult(List<CardAnswerModel> answers) {
+    return engine.computeResult(answers);
   }
 }
