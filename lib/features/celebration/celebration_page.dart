@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:confetti/confetti.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pg1/core/shared/extensions/num_extension.dart';
 import 'package:pg1/core/shared/extensions/build_context_extension.dart';
@@ -20,17 +19,12 @@ class CelebrationPage extends StatefulWidget {
 }
 
 class _CelebrationPageState extends State<CelebrationPage> with SingleTickerProviderStateMixin {
-  late ConfettiController _confettiController;
   late AnimationController _scaleController;
   late Animation<double> _scaleAnim;
 
   @override
   void initState() {
     super.initState();
-
-    _confettiController = ConfettiController(
-      duration: const Duration(milliseconds: 5000),
-    );
 
     _scaleController = AnimationController(
       vsync: this,
@@ -43,14 +37,12 @@ class _CelebrationPageState extends State<CelebrationPage> with SingleTickerProv
     );
 
     Future.delayed(const Duration(milliseconds: 300), () {
-      _confettiController.play();
       _scaleController.forward();
     });
   }
 
   @override
   void dispose() {
-    _confettiController.dispose();
     _scaleController.dispose();
     super.dispose();
   }
@@ -73,25 +65,6 @@ class _CelebrationPageState extends State<CelebrationPage> with SingleTickerProv
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    /// Confetti
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: ConfettiWidget(
-                        confettiController: _confettiController,
-                        blastDirectionality: BlastDirectionality.explosive,
-                        maxBlastForce: 12,
-                        minBlastForce: 4,
-                        emissionFrequency: 0.05,
-                        numberOfParticles: 40,
-                        gravity: 0.05,
-                        colors: const [
-                          AppColor.primary,
-                          AppColor.textBase,
-                          AppColor.white,
-                        ],
-                      ),
-                    ),
-
                     /// Celebration content
                     SingleChildScrollView(
                       child: Column(
